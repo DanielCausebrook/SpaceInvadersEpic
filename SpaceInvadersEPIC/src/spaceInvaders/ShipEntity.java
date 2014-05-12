@@ -8,6 +8,10 @@ public class ShipEntity extends Entity {
     /** The game in which the ship exists */
     private final Game game;
     
+    private double armour = 100;
+    
+    private int maxHealth = 100;
+    
     /**
      * Create a new entity to represent the players ship
      *  
@@ -43,6 +47,17 @@ public class ShipEntity extends Entity {
         }
         
         super.move(delta);
+    }
+    
+    public void resetShip() {
+    	armour = maxHealth;
+    }
+    
+    public void tookDamage(double damageTaken) {
+    	armour-=damageTaken;
+    	if(armour<=0){
+            game.notifyDeath();
+    	}
     }
     
     /**

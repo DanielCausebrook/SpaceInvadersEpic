@@ -199,6 +199,7 @@ public class Game extends Canvas {
         // clear out any existing entities and intialise a new set
         entities.clear();
         initEntities();
+        ((ShipEntity) ship).resetShip();
         // blank out any keyboard settings we might currently have
         leftPressed = false;
         rightPressed = false;
@@ -345,6 +346,10 @@ public class Game extends Canvas {
         	glowColor[x][y]=Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
         	numGlows[x][y]++;
         }
+        
+        public Entity getShip() {
+        	return ship;
+        }
     
     /**
      * Notification that an alien has been killed
@@ -398,52 +403,52 @@ public class Game extends Canvas {
         
         // if we waited long enough, create the shot entity, and record the time.
         lastFire = System.currentTimeMillis();
-        ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getShotPower());
+        ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getShotPower(),0);
         entities.add(shot);
-                shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower());
+                shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower(),0);
         entities.add(shot);
                 if(isEpic&&power.getPower()>=10){
                     if(upgradePanel.getBonusPower()>=1) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+8,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+8,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=2) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+10,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+10,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=3) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+7,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+7,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=4) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+11,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+11,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=5) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+5,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+5,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=6) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+13,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+13,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=7) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+4,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+4,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=8) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+14,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+14,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=9) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+3,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+3,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
                     if(upgradePanel.getBonusPower()>=10) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+15,ship.getY()-5,1);
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+15,ship.getY()-5,1,0);
                         entities.add(shot);
                     }
-                    shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+9,ship.getY()-5,1);
+                    shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+9,ship.getY()-5,1,0);
                     entities.add(shot);
                     power.addPower(-10);
                     
