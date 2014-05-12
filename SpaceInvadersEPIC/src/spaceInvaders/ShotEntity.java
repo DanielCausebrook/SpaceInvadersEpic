@@ -15,6 +15,8 @@ public class ShotEntity extends Entity {
     /** True if this shot has been "used", i.e. its hit something */
     private boolean used = false;
     
+    private int shotType;
+    
     private double shotDmg;
     
     /**
@@ -24,15 +26,22 @@ public class ShotEntity extends Entity {
      * @param sprite The sprite representing this shot
      * @param x The initial x location of the shot
      * @param y The initial y location of the shot
+     * @param shotType 0: Player's shot | 1: Alien's shot
      */
-    public ShotEntity(Game game,String sprite,int x,int y,int dmg) {
+    public ShotEntity(Game game,String sprite,int x,int y,int dmg,int shotType) {
         super(sprite,x,y);
         
         this.game = game;
         
+        this.shotType = shotType;
+        
         dy = moveSpeed;
         
-        shotDmg=((double) (dmg)/80)+1;
+        if(shotType==0){
+        	shotDmg=((double) (dmg)/80)+1;
+        } else if(shotType==1){
+        	shotDmg=dmg;
+        }
         
     }
     
@@ -44,7 +53,11 @@ public class ShotEntity extends Entity {
     @Override
     public void move(long delta) {
         // proceed with normal move
-        super.move(delta);
+    	if(shotType==0){
+    		super.move(delta);
+    	} else if(shotType==1){
+    		super.move(-(delta/5));
+    	}
         
         // if we shot off the screen, remove ourselfs
         if (y < -100) {
@@ -67,7 +80,7 @@ public class ShotEntity extends Entity {
         }
         
         // if we've hit an alien, kill it!
-        if (other instanceof AlienEntity) {
+        if (other instanceof AlienEntity && shotType==0) {
             // remove the affected entities
             try{
             ((AlienEntity) other).alienKilled(shotDmg);
@@ -78,6 +91,9 @@ public class ShotEntity extends Entity {
             
             // notify the game that the alien has been killed
             used = true;
+        } else if (other instanceof ShipEntity && shotType==1){
+        	((ShipEntity)game.getShip()).tookDamage(shotDmg);
+            game.removeEntity(this);
         }
     }
 }
