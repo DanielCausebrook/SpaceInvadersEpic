@@ -8,9 +8,9 @@ public class ShipEntity extends Entity {
     /** The game in which the ship exists */
     private final Game game;
     
-    private double armour = 100;
+    protected double armour = 100;
     
-    private int maxHealth = 100;
+    protected int maxHealth = 100;
     
     /**
      * Create a new entity to represent the players ship

@@ -38,7 +38,7 @@ public class Game extends Canvas {
     /** True if the game is currently "running", i.e. the game loop is looping */
     final boolean gameRunning = true;
     /** The list of all the entities that exist in our game */
-    private final ArrayList entities = new ArrayList();
+    final ArrayList entities = new ArrayList();
     /** The list of entities that need to be removed from the game this loop */
     private final ArrayList removeList = new ArrayList();
     /** The entity representing the player */
@@ -81,7 +81,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 0;
+    private int level = 5;
     
     private UpgradeShop upgradePanel;
     
@@ -243,6 +243,8 @@ public class Game extends Canvas {
                                     alien = new RegenAlien(this,"sprites/alienRegen.gif",100+(x*50),(50)+row*30,row,x);
                                 } else if(randDec<=(level)*0.03) {
                                     alien = new CloneAlien(this,"sprites/alienClone.gif",100+(x*50),(50)+row*30,row,x);
+                                } else if(randDec<=(level)*0.04) {
+                                    alien = new FiringAlien(this,"sprites/FiringAlien.png",100+(x*50),(50)+row*30,row,x);
                                 } else {
                                     alien = new RegularAlien(this,"sprites/alien.gif",100+(x*50),(50)+row*30,row,x);
                                 }
@@ -350,6 +352,7 @@ public class Game extends Canvas {
         public Entity getShip() {
         	return ship;
         }
+        
     
     /**
      * Notification that an alien has been killed
@@ -515,7 +518,14 @@ public class Game extends Canvas {
                                 g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((AlienEntity) entity).armour/((AlienEntity) entity).maxHealth)), 2);
 
             
-                               }
+                               } else if(entity instanceof ShipEntity){
+                                   g.setColor(Color.DARK_GRAY);
+                                   g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
+                                   g.setColor(Color.RED);
+                                   g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((ShipEntity) entity).armour/((ShipEntity) entity).maxHealth)), 2);
+
+               
+                                  }
                         }
                         
                         power.draw(g);

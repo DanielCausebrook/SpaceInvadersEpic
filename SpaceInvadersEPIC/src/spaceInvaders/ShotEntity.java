@@ -37,7 +37,11 @@ public class ShotEntity extends Entity {
         
         dy = moveSpeed;
         
-        shotDmg=((double) (dmg)/80)+1;
+        if(shotType==0){
+        	shotDmg=((double) (dmg)/80)+1;
+        } else if(shotType==1){
+        	shotDmg=dmg;
+        }
         
     }
     
@@ -49,7 +53,11 @@ public class ShotEntity extends Entity {
     @Override
     public void move(long delta) {
         // proceed with normal move
-        super.move(delta);
+    	if(shotType==0){
+    		super.move(delta);
+    	} else if(shotType==1){
+    		super.move(-(delta/5));
+    	}
         
         // if we shot off the screen, remove ourselfs
         if (y < -100) {
