@@ -43,7 +43,7 @@ public class Game extends Canvas {
     private final ArrayList removeList = new ArrayList();
     /** The entity representing the player */
     private Entity ship;
-    /** The speed at which the player's ship should move (pixels/sec) */
+    /** The speed at which the player's ship should move (pixels/second) */
     private final double moveSpeed = 300;
     /** The time at which last fired a shot */
     private long lastFire = 0;
@@ -196,7 +196,7 @@ public class Game extends Canvas {
      * create a new set.
      */
     private void startGame() {
-        // clear out any existing entities and intialise a new set
+        // clear out any existing entities and initialise a new set
         entities.clear();
         initEntities();
         // blank out any keyboard settings we might currently have
@@ -225,7 +225,7 @@ public class Game extends Canvas {
      * entity will be added to the overall list of entities in the game.
      */
     private void initEntities() {
-        // create the player ship and place it roughly in the center of the screen
+        // create the player ship and place it roughly in the centre of the screen
         ship = new ShipEntity(this,"sprites/ship.gif",370,550);
         entities.add(ship);
         
@@ -350,7 +350,7 @@ public class Game extends Canvas {
      * Notification that an alien has been killed
      */
     public void notifyAlienKilled(int y,int x) {
-        // reduce the alient count, if there are none left, the player has won!
+        // reduce the alien count, if there are none left, the player has won!
         alienCount--;
         
         if (alienCount == 0) {
@@ -464,7 +464,7 @@ public class Game extends Canvas {
     public void gameLoop() throws Exception{
         long lastLoopTime = System.currentTimeMillis();
         
-        // keep looping round til the game ends
+        // keep looping round until the game ends
         while (gameRunning) {
             // work out how long its been since the last update, this
             // will be used to calculate how far the entities should
@@ -528,7 +528,7 @@ public class Game extends Canvas {
                         
             // brute force collisions, compare every entity against
             // every other entity. If any of them collide notify 
-            // both entities that the collision has occured
+            // both entities that the collision has occurred
             if(!waitingForKeyPress&&!paused){
                 for (int p=0;p<entities.size();p++) {
                     for (int s=p+1;s<entities.size();s++) {
@@ -581,7 +581,7 @@ public class Game extends Canvas {
             
             // resolve the movement of the ship. First assume the ship 
             // isn't moving. If either cursor key is pressed then
-            // update the movement appropraitely
+            // update the movement appropriately
             ship.setHorizontalMovement(0);
             if(!paused) {
                 if ((leftPressed) && (!rightPressed)) {
@@ -619,8 +619,8 @@ public class Game extends Canvas {
      * continue)
      * 
      * This has been implemented as an inner class more through 
-     * habbit then anything else. Its perfectly normal to implement
-     * this as seperate class if slight less convienient.
+     * habit then anything else. Its perfectly normal to implement
+     * this as separate class if slight less convenient.
      * 
      * @author Kevin Glass
      */
@@ -705,13 +705,13 @@ public class Game extends Canvas {
         @Override
         public void keyTyped(KeyEvent e) {
             // if we're waiting for a "any key" type then
-            // check if we've recieved any recently. We may
+            // check if we've received any recently. We may
             // have had a keyType() event from the user releasing
             // the shoot or move keys, hence the use of the "pressCount"
             // counter.
             if (waitingForKeyPress) {
                 if (pressCount == 1) {
-                    // since we've now recieved our key typed
+                    // since we've now received our key typed
                     // event we can mark it as such and start 
                     // our new game
                     waitingForKeyPress = false;
