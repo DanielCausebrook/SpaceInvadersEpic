@@ -199,7 +199,6 @@ public class Game extends Canvas {
         // clear out any existing entities and initialise a new set
         entities.clear();
         initEntities();
-        ((ShipEntity) ship).resetShip();
         // blank out any keyboard settings we might currently have
         leftPressed = false;
         rightPressed = false;
@@ -227,7 +226,16 @@ public class Game extends Canvas {
      */
     private void initEntities() {
         // create the player ship and place it roughly in the centre of the screen
+    	double prevArm;
+    	try{
+    		prevArm = ((ShipEntity)ship).armour;
+    	} catch(NullPointerException e){
+    		prevArm=0;
+    	}
         ship = new ShipEntity(this,"sprites/ship.gif",370,550);
+        if(prevArm>0){
+        	((ShipEntity)ship).armour = prevArm;
+        }
         entities.add(ship);
         
                
@@ -279,6 +287,7 @@ public class Game extends Canvas {
      * Notification that the player has died. 
      */
     public void notifyDeath() {
+        ((ShipEntity) ship).resetShip();
         message = "Oh no! They got you, try again?";
         waitingForKeyPress = true; 
     }
