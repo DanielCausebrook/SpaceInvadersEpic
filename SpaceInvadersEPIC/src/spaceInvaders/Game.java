@@ -103,6 +103,7 @@ public class Game extends Canvas {
     public Game() {
         // create a frame to contain our game
         JFrame container = new JFrame("Space Invaders 101");
+        //Window frame?
         container.setUndecorated(true);
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = (JPanel) container.getContentPane();
