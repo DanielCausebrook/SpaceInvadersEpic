@@ -8,6 +8,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -91,6 +95,8 @@ public class Game extends Canvas {
     
     private boolean upgradesShown = false;
     
+    private boolean mouseOverPause = false;
+    
     Color[][] glowColor;
     int[][] numGlows;
     Glow glow;
@@ -173,6 +179,8 @@ public class Game extends Canvas {
         // add a key input system (defined below) to our canvas
         // so we can respond to key pressed
         addKeyListener(new KeyInputHandler());
+        this.addMouseListener(new MouseClickHandler());
+        this.addMouseMotionListener(new MouseMoveHandler());
         
         initUpgrades();
         
@@ -510,6 +518,22 @@ public class Game extends Canvas {
                         
                         power.draw(g);
                         XP.draw(g);
+                        
+                        //Draw pause button
+                        g.setColor(Color.DARK_GRAY);
+                        g.drawRect(720, 40, 70, 15);
+                        if(mouseOverPause){
+                            g.setColor(Color.BLUE);
+                            g.fillRect(721, 41, 69, 14);
+                            g.setColor(Color.WHITE);
+                            g.drawString("Pause (P)", 730, 52);
+                        } else {
+                            g.setColor(Color.LIGHT_GRAY);
+                            g.fillRect(721, 41, 69, 14);
+                            g.setColor(Color.BLACK);
+                            g.drawString("Pause (P)", 730, 52);
+                        	
+                        }
             
                        if(!waitingForKeyPress&&!epicPressed&&!paused) {
                             sparkCount++;
@@ -557,11 +581,10 @@ public class Game extends Canvas {
             
             // if we're waiting for an "any key" press then draw the 
             // current message 
+            g.setColor(Color.white);
             if(paused) {
-                g.setColor(Color.white);
                 g.drawString("Paused",(800-g.getFontMetrics().stringWidth("Paused"))/2,300);
             } else if (waitingForKeyPress) {
-                g.setColor(Color.white);
                 g.drawString(message,(800-g.getFontMetrics().stringWidth(message))/2,250);
                 g.drawString("Press any key",(800-g.getFontMetrics().stringWidth("Press any key"))/2,300);
             }
@@ -619,6 +642,65 @@ public class Game extends Canvas {
      * 
      * @author Kevin Glass
      */
+    private class MouseMoveHandler implements MouseMotionListener{
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+    		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
+    			mouseOverPause=true;
+    		}
+    		if(mouseOverPause){
+        		if(!(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55)){
+        			mouseOverPause=false;
+        		}
+    		}
+		}
+    	
+    }
+    private class MouseClickHandler implements MouseListener{
+    	public void mouseClicked(MouseEvent e) {
+    		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
+                if(!paused) {
+                    if(!waitingForKeyPress) {
+                        paused=true;
+                    }
+                } else {
+                    paused=false;
+                }
+                leftPressed = false;
+                rightPressed = false;
+                firePressed = false;
+    			
+    		}
+    	}
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+    }
+    
     private class KeyInputHandler extends KeyAdapter {
         /** The number of key presses we've had while waiting for an "any key" press */
         private int pressCount = 1;
@@ -651,7 +733,7 @@ public class Game extends Canvas {
             if (e.getKeyCode() == KeyEvent.VK_B) {
                 epicPressed = true;
             }
-            if (e.getKeyCode() == KeyEvent.VK_V) {
+            if (e.getKeyCode() == KeyEvent.VK_P) {
                 if(!paused) {
                     if(!waitingForKeyPress) {
                         paused=true;
