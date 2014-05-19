@@ -539,7 +539,7 @@ public class Game extends Canvas {
                             sparkCount++;
                             if(sparkCount>=1){
                                 Random rand = new Random();
-                                Spark spk = new Spark(this,power,null,true,power.getBarPos()[0]+(rand.nextInt()%40)-20,power.getBarPos()[1]-(rand.nextInt()%20),10,1,50,Color.orange,true);
+                                Spark spk = new Spark(this,power,null,true,power.getBarPos()[0]+(rand.nextInt()%40)-20,power.getBarPos()[1]-(rand.nextInt()%20),10,1,50,Color.orange,Spark.glowEnabled);
                                 sparks.add(spk);
                                 sparkCount=0;
                             }

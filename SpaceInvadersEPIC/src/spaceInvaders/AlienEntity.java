@@ -98,8 +98,14 @@ public abstract class AlienEntity extends Entity {
             game.notifyAlienKilled((int)y,(int)x);
             Random r = new Random();
             Color c;
-            
-            for(int i = 0; i<70;i++){
+
+            int numSparks;
+            if(Spark.glowEnabled){
+            	numSparks=Spark.glowSparks;
+            } else {
+            	numSparks=Spark.normalSparks;
+            }
+            for(int i = 0; i<numSparks;i++){
             	switch(r.nextInt(3)){
             	case 0:c=Color.RED;
             	break;
@@ -113,7 +119,7 @@ public abstract class AlienEntity extends Entity {
             	int distance = r.nextInt(200);
             	int xPos = (int) (x+(Math.cos(angle)*distance));
             	int yPos = (int) (y+(Math.sin(angle)*distance));
-            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);
+            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,Spark.glowEnabled);
             }
             for(int i = 0; i<XPBonus;i++){
             	double angle = r.nextInt(360);

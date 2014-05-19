@@ -63,16 +63,22 @@ public class ShipEntity extends Entity {
     		Random r = new Random();
             Color c;
             
-            for(int i = 0; i<70;i++){
-            	switch(r.nextInt(3)){
-            	case 0:c=Color.RED;
-            	break;
-            	case 1:c=Color.ORANGE;
-            	break;
-            	case 2:c=Color.RED;
-            	break;
-            	default:c=Color.RED;
+            int numSparks;
+            if(Spark.glowEnabled){
+            	numSparks=Spark.glowSparks;
+            } else {
+            	numSparks=Spark.normalSparks;
             }
+            for(int i = 0; i<numSparks;i++){
+            	switch(r.nextInt(3)){
+	            	case 0:c=Color.RED;
+	            	break;
+	            	case 1:c=Color.ORANGE;
+	            	break;
+	            	case 2:c=Color.RED;
+	            	break;
+	            	default:c=Color.RED;
+            	}
             	double angle = r.nextInt(360);
             	int distance = r.nextInt(200);
             	int xPos = (int) (x+(Math.cos(angle)*distance));
