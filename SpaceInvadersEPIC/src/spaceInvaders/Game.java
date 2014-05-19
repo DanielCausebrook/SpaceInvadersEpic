@@ -103,6 +103,7 @@ public class Game extends Canvas {
     public Game() {
         // create a frame to contain our game
         JFrame container = new JFrame("Space Invaders 101");
+        //Window frame?
         container.setUndecorated(true);
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = (JPanel) container.getContentPane();
@@ -420,46 +421,16 @@ public class Game extends Canvas {
                 shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower(),0);
         entities.add(shot);
                 if(isEpic&&power.getPower()>=10){
-                    if(upgradePanel.getBonusPower()>=1) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+8,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=2) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+10,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=3) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+7,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=4) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+11,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=5) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+5,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=6) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+13,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=7) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+4,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=8) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+14,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=9) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+3,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
-                    if(upgradePanel.getBonusPower()>=10) {
-                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+15,ship.getY()-5,1,0);
-                        entities.add(shot);
-                    }
+                	for(int i = 0;i<=upgradePanel.getBonusPower();i++){
+                		int shotPos;
+	                	if(i%2==0){
+	                         shotPos = (9+((int) Math.ceil(((double)i)/2)));
+	                	} else {
+	                        shotPos = (9-((int) Math.ceil(((double)i)/2)));
+	                	}
+	                	shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+shotPos,ship.getY()-5,1,0);
+	                    entities.add(shot);
+	                }
                     shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+9,ship.getY()-5,1,0);
                     entities.add(shot);
                     power.addPower(-10);

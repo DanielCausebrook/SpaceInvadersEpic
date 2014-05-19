@@ -9,7 +9,10 @@ package spaceInvaders;
  * @author Daniel
  */
 public class CloneAlien extends AlienEntity{
-    
+	private static final int maxTime = 800;
+    private int timeToClone = maxTime;
+	
+	
     public CloneAlien(Game game,String ref,int x,int y, int row, int col){
         super(game,ref,x,y,row,col);
         armour=150;
@@ -33,14 +36,18 @@ public class CloneAlien extends AlienEntity{
             super.move(delta);
             try{
                 if(game.getAlienGrid()[rowNum+1][colNum]==null){
-                    AlienEntity alien;
-                    alien = new RegularAlien(game,"sprites/alienEgg.gif",(int) x,(int)y+30,rowNum+1,colNum);
-                    game.addEntity(alien);
-                    alien.setHorizontalMovement(dx);
-                    Entity[][] grid = game.getAlienGrid();
-                    grid[rowNum+1][colNum]=alien;
-                    game.setAlienGrid(grid);
-                    game.notifyAlienCreated();
+                	timeToClone-=delta;
+                	if(timeToClone<=0){
+                		AlienEntity alien;
+                		alien = new RegularAlien(game,"sprites/alienEgg.gif",(int) x,(int)y+30,rowNum+1,colNum);
+                		game.addEntity(alien);
+                		alien.setHorizontalMovement(dx);
+	                    Entity[][] grid = game.getAlienGrid();
+	                    grid[rowNum+1][colNum]=alien;
+	                    game.setAlienGrid(grid);
+	                    game.notifyAlienCreated();
+	                    timeToClone=maxTime;
+                	}
                 }
             }catch(Exception e){
 
