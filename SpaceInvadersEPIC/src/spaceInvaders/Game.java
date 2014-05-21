@@ -99,6 +99,14 @@ public class Game extends Canvas {
     
     private int damaged;
     
+    private int mouseX;
+    
+    private int mouseY;
+    
+    private boolean mouseControls = true;
+    
+    private boolean mousePressed = false;
+    
     Color[][] glowColor;
     int[][] numGlows;
     Glow glow;
@@ -639,11 +647,19 @@ public class Game extends Canvas {
             // update the movement appropriately
             ship.setHorizontalMovement(0);
             if(!paused) {
-                if ((leftPressed) && (!rightPressed)) {
-                    ship.setHorizontalMovement(-moveSpeed);
-                } else if ((rightPressed) && (!leftPressed)) {
-                    ship.setHorizontalMovement(moveSpeed);
-                }
+	            if(mouseControls){
+	            	if(mouseX+10<ship.x){
+	                    ship.setHorizontalMovement(-moveSpeed);
+	            	} else if(mouseX-10>ship.x){
+	                    ship.setHorizontalMovement(moveSpeed);
+	            	}
+	            } else {
+		                if ((leftPressed) && (!rightPressed)) {
+		                    ship.setHorizontalMovement(-moveSpeed);
+		                } else if ((rightPressed) && (!leftPressed)) {
+		                    ship.setHorizontalMovement(moveSpeed);
+		                }
+	            }
             }
             
             // if we're pressing fire, attempt to fire
@@ -652,8 +668,16 @@ public class Game extends Canvas {
                 tryToFire(false);
             }
                         
-                        if (epicPressed&&!paused) {
+            if (epicPressed&&!paused) {
                 tryToFire(true);
+            }
+            
+            if(mouseControls){
+            	if(mousePressed){
+            		tryToFire(true);
+            	} else {
+            		tryToFire(false);
+            	}
             }
             
             
@@ -682,14 +706,20 @@ public class Game extends Canvas {
     private class MouseMoveHandler implements MouseMotionListener{
 
 		@Override
-		public void mouseDragged(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+		public void mouseDragged(MouseEvent e) {
 			
+			if(mouseControls){
+				mouseX=e.getX();
+				mouseY=e.getY();
+			}
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-
+			if(mouseControls){
+				mouseX=e.getX();
+				mouseY=e.getY();
+			}
             if(paused){
         		if(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364){
         			mouseOverPause=true;
@@ -745,12 +775,16 @@ public class Game extends Canvas {
 		}
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			if(mouseControls){
+				mousePressed=true;
+			}
 			
 		}
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+			if(mouseControls){
+				mousePressed=false;
+			}
 			
 		}
     }
