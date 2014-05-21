@@ -71,7 +71,7 @@ public class Game extends Canvas {
         
     private boolean epicPressed = false;
     
-    private final int gridRows = 0;
+    private final int gridRows = 5;
         
     private final int gridCols = 12;
         
@@ -85,7 +85,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 5;
+    private int level = 0;
     
     private UpgradeShop upgradePanel;
     
@@ -473,6 +473,11 @@ public class Game extends Canvas {
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0,0,800,600);
+            SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);;
+            Color c = new Color(0,0,0,100);
+            g.setColor(c);
+            g.fillRect(0,0,800,600);
+            
             
             // cycle round asking each entity to move itself
             if (!waitingForKeyPress&&!paused) {
