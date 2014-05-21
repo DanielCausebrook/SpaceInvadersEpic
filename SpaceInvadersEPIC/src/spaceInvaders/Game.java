@@ -534,21 +534,6 @@ public class Game extends Canvas {
                         power.draw(g);
                         XP.draw(g);
                         
-                        //Draw pause button
-                        g.setColor(Color.DARK_GRAY);
-                        g.drawRect(720, 40, 70, 15);
-                        if(mouseOverPause){
-                            g.setColor(Color.BLUE);
-                            g.fillRect(721, 41, 69, 14);
-                            g.setColor(Color.WHITE);
-                            g.drawString("Pause (P)", 730, 52);
-                        } else {
-                            g.setColor(Color.LIGHT_GRAY);
-                            g.fillRect(721, 41, 69, 14);
-                            g.setColor(Color.BLACK);
-                            g.drawString("Pause (P)", 730, 52);
-                        	
-                        }
             
                        if(!waitingForKeyPress&&!epicPressed&&!paused) {
                             sparkCount++;
@@ -598,6 +583,9 @@ public class Game extends Canvas {
             // current message 
             g.setColor(Color.white);
             if(paused) {
+            	g.setColor(Color.DARK_GRAY);
+            	g.fillRect(350, 275,100,100);
+                g.setColor(Color.white);
                 g.drawString("Paused",(800-g.getFontMetrics().stringWidth("Paused"))/2,300);
             } else if (waitingForKeyPress) {
                 g.drawString(message,(800-g.getFontMetrics().stringWidth(message))/2,250);
@@ -606,7 +594,41 @@ public class Game extends Canvas {
             
             g.drawString("Level "+(level+1),10,30);
             
-           
+
+            //Draw pause button
+            if(paused){
+                g.setColor(Color.BLACK);
+                g.drawRect(361, 349, 75, 15);
+            }else{
+                g.setColor(Color.DARK_GRAY);
+                g.drawRect(720, 40, 70, 15);
+            }
+            if(mouseOverPause){
+                if(paused){
+                    g.setColor(Color.BLUE);
+                    g.fillRect(362, 350, 74, 14);
+                    g.setColor(Color.WHITE);
+                    g.drawString("Unpause (P)", 364, 361);
+                }else{
+                    g.setColor(Color.BLUE);
+                    g.fillRect(721, 41, 69, 14);
+                    g.setColor(Color.WHITE);
+                    g.drawString("Pause (P)", 730, 52);
+                }
+            } else {
+                if(paused){
+                    g.setColor(Color.LIGHT_GRAY);
+                    g.fillRect(362, 350, 74, 14);
+                    g.setColor(Color.BLACK);
+                    g.drawString("Unpause (P)", 364, 361);
+                }else{
+                    g.setColor(Color.LIGHT_GRAY);
+                    g.fillRect(721, 41, 69, 14);
+                    g.setColor(Color.BLACK);
+                    g.drawString("Pause (P)", 730, 52);
+                }
+            	
+            }
             // finally, we've completed drawing so clear up the graphics
             // and flip the buffer over
             g.dispose();
@@ -667,32 +689,49 @@ public class Game extends Canvas {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-    		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
-    			mouseOverPause=true;
-    		}
-    		if(mouseOverPause){
-        		if(!(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55)){
-        			mouseOverPause=false;
+
+            if(paused){
+        		if(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364){
+        			mouseOverPause=true;
         		}
-    		}
+        		if(mouseOverPause){
+            		if(!(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364)){
+            			mouseOverPause=false;
+            		}
+        		}
+            }else{
+        		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
+        			mouseOverPause=true;
+        		}
+        		if(mouseOverPause){
+            		if(!(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55)){
+            			mouseOverPause=false;
+            		}
+        		}
+            }
 		}
     	
     }
     private class MouseClickHandler implements MouseListener{
     	public void mouseClicked(MouseEvent e) {
-    		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
-                if(!paused) {
-                    if(!waitingForKeyPress) {
-                        paused=true;
-                    }
-                } else {
+            if(paused){
+        		if(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364){
                     paused=false;
-                }
-                leftPressed = false;
-                rightPressed = false;
-                firePressed = false;
-    			
-    		}
+                    leftPressed = false;
+                    rightPressed = false;
+                    firePressed = false;
+                    epicPressed=false;
+        			
+        		}
+            	
+            } else {
+        		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
+                    if(!waitingForKeyPress) {
+                            paused=true;
+                    }
+        			
+        		}
+            }
     	}
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
