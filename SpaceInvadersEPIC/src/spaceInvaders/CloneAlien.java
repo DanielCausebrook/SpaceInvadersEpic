@@ -39,7 +39,7 @@ public class CloneAlien extends AlienEntity{
                 	timeToClone-=delta;
                 	if(timeToClone<=0){
                 		AlienEntity alien;
-                		alien = new RegularAlien(game,"sprites/alienEgg.gif",(int) x,(int)y+30,rowNum+1,colNum);
+                		alien = new RegularAlien(game,"sprites/alienShield.png",(int) x,(int)y+30,rowNum+1,colNum);
                 		game.addEntity(alien);
                 		alien.setHorizontalMovement(dx);
 	                    Entity[][] grid = game.getAlienGrid();

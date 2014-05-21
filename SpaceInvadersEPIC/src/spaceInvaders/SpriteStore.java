@@ -72,11 +72,11 @@ public class SpriteStore {
         
         // create an accelerated image of the right size to store our sprite in
         GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-       Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.BITMASK);
+        Image image = gc.createCompatibleImage(sourceImage.getWidth(),sourceImage.getHeight(),Transparency.TRANSLUCENT);
         
         // draw our source image into the accelerated image
         image.getGraphics().drawImage(sourceImage,0,0,null);
-        
+
         // create a sprite, add it the cache then return it
         Sprite sprite = new Sprite(image);
         sprites.put(ref,sprite);

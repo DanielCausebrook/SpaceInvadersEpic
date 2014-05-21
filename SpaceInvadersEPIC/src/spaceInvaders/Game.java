@@ -71,7 +71,7 @@ public class Game extends Canvas {
         
     private boolean epicPressed = false;
     
-    private final int gridRows = 5;
+    private final int gridRows = 0;
         
     private final int gridCols = 12;
         
@@ -85,7 +85,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 0;
+    private int level = 5;
     
     private UpgradeShop upgradePanel;
     
@@ -241,7 +241,7 @@ public class Game extends Canvas {
     	} catch(NullPointerException e){
     		prevArm=0;
     	}
-        ship = new ShipEntity(this,"sprites/ship.gif",370,550);
+        ship = new ShipEntity(this,"sprites/ship.png",370,550);
         if(prevArm>0){
         	((ShipEntity)ship).armour = prevArm;
         }
@@ -255,15 +255,15 @@ public class Game extends Canvas {
                 Entity alien;
                                 double randDec = Math.random();
                                 if(randDec<=(level)*0.01) {
-                                    alien = new StrongAlien(this,"sprites/alienStrg.gif",100+(x*50),(50)+row*30,row,x);
+                                    alien = new StrongAlien(this,"sprites/alienStrong.png",100+(x*50),(50)+row*30,row,x);
                                 } else if(randDec<=(level)*0.02) {
-                                    alien = new RegenAlien(this,"sprites/alienRegen.gif",100+(x*50),(50)+row*30,row,x);
+                                    alien = new RegenAlien(this,"sprites/alienRegen.png",100+(x*50),(50)+row*30,row,x);
                                 } else if(randDec<=(level)*0.03) {
-                                    alien = new CloneAlien(this,"sprites/alienClone.gif",100+(x*50),(50)+row*30,row,x);
+                                    alien = new CloneAlien(this,"sprites/alienClone.png",100+(x*50),(50)+row*30,row,x);
                                 } else if(randDec<=(level)*0.04) {
                                     alien = new FiringAlien(this,"sprites/FiringAlien.png",100+(x*50),(50)+row*30,row,x);
                                 } else {
-                                    alien = new RegularAlien(this,"sprites/alien.gif",100+(x*50),(50)+row*30,row,x);
+                                    alien = new RegularAlien(this,"sprites/alien.png",100+(x*50),(50)+row*30,row,x);
                                 }
                 entities.add(alien);
                                 alienGrid[row][x]=alien;
