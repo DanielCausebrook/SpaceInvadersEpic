@@ -9,7 +9,7 @@ package spaceInvaders;
  * @author Daniel
  */
 public class CloneAlien extends AlienEntity{
-	private static final int maxTime = 800;
+	private static final int maxTime = 500;
     private int timeToClone = maxTime;
 	
 	
@@ -26,7 +26,7 @@ public class CloneAlien extends AlienEntity{
            if ((dx < 0) && (x < 10)) {
                     game.updateLogic();
             }
-            // and vice vesa, if we have reached the right hand side of 
+            // and vice versa, if we have reached the right hand side of 
            // the screen and are moving right, request a logic update
             if ((dx > 0) && (x > 750)) {
                     game.updateLogic();
