@@ -55,7 +55,9 @@ public class PowerBar {
     public void draw(Graphics g){
         g.setColor(Color.DARK_GRAY);
         g.drawRect(10, 585, 780, 4);
+        g.setColor(Color.BLACK);
+        g.fillRect(11, 586, 779, 3);
         g.setColor(Color.orange);
-        g.fillRect(10, 585, (int) (pixPerPwr * power)  , 4);
+        g.fillRect(11, 586, (int) (pixPerPwr * power)  , 3);
     }
 }
