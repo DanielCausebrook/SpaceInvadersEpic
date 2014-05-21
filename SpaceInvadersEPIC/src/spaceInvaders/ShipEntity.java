@@ -1,6 +1,7 @@
 package spaceInvaders;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 
 /**
@@ -11,10 +12,12 @@ import java.util.Random;
 public class ShipEntity extends Entity {
     /** The game in which the ship exists */
     private final Game game;
-    
+    private static final int invTime = 1000;
     protected double armour = 100;
     
     protected int maxHealth = 100;
+    
+    private int invincibility;
     
     /**
      * Create a new entity to represent the players ship
@@ -49,7 +52,7 @@ public class ShipEntity extends Entity {
            return;
 
         }
-        
+        invincibility-=delta;
         super.move(delta);
     }
     
@@ -58,35 +61,47 @@ public class ShipEntity extends Entity {
     }
     
     public void tookDamage(double damageTaken) {
-    	armour-=damageTaken;
-    	if(armour<=0){
-    		Random r = new Random();
-            Color c;
-            
-            int numSparks;
-            if(Spark.glowEnabled){
-            	numSparks=Spark.glowSparks;
-            } else {
-            	numSparks=Spark.normalSparks;
-            }
-            for(int i = 0; i<numSparks;i++){
-            	switch(r.nextInt(3)){
-	            	case 0:c=Color.RED;
-	            	break;
-	            	case 1:c=Color.ORANGE;
-	            	break;
-	            	case 2:c=Color.RED;
-	            	break;
-	            	default:c=Color.RED;
-            	}
-            	double angle = r.nextInt(360);
-            	int distance = r.nextInt(200);
-            	int xPos = (int) (x+(Math.cos(angle)*distance));
-            	int yPos = (int) (y+(Math.sin(angle)*distance));
-            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);
-            }
-            game.removeEntity(this);
-            game.notifyDeath();
+    	if(invincibility<=0){
+	    	game.isDamaged();
+	    	invincibility=invTime;
+	    	armour-=damageTaken;
+	    	if(armour<=0){
+	    		Random r = new Random();
+	            Color c;
+	            
+	            int numSparks;
+	            if(Spark.glowEnabled){
+	            	numSparks=Spark.glowSparks;
+	            } else {
+	            	numSparks=Spark.normalSparks;
+	            }
+	            for(int i = 0; i<numSparks;i++){
+	            	switch(r.nextInt(3)){
+		            	case 0:c=Color.RED;
+		            	break;
+		            	case 1:c=Color.ORANGE;
+		            	break;
+		            	case 2:c=Color.RED;
+		            	break;
+		            	default:c=Color.RED;
+	            	}
+	            	double angle = r.nextInt(360);
+	            	int distance = r.nextInt(200);
+	            	int xPos = (int) (x+(Math.cos(angle)*distance));
+	            	int yPos = (int) (y+(Math.sin(angle)*distance));
+	            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);
+	            }
+	            game.removeEntity(this);
+	            game.notifyDeath();
+	    	}
+    	}
+    }
+
+    public void draw(Graphics g) {
+    	if(Math.round((((double)invincibility)/50))%2==0){
+    		sprite.draw(g,(int) x,(int) y);
+    	}else if(invincibility<0){
+    		sprite.draw(g,(int) x,(int) y);
     	}
     }
     

@@ -97,6 +97,8 @@ public class Game extends Canvas {
     
     private boolean mouseOverPause = false;
     
+    private int damaged;
+    
     Color[][] glowColor;
     int[][] numGlows;
     Glow glow;
@@ -371,6 +373,10 @@ public class Game extends Canvas {
         	return ship;
         }
         
+        public void isDamaged() {
+        	damaged=100;
+        }
+        
     
     /**
      * Notification that an alien has been killed
@@ -473,8 +479,12 @@ public class Game extends Canvas {
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0,0,800,600);
-            SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);;
-            Color c = new Color(0,0,0,100);
+            SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);
+            Color c= new Color(0,0,0,100);
+            if(damaged>0){
+                c = new Color(100,0,0,100);
+                damaged-=delta;
+            }
             g.setColor(c);
             g.fillRect(0,0,800,600);
             
