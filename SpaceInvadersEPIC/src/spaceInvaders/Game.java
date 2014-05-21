@@ -16,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -106,6 +107,8 @@ public class Game extends Canvas {
     private boolean mouseControls = false;
     
     private boolean mousePressed = false;
+    
+    private LinkedList<Button> buttons = new LinkedList<>();
     
     Color[][] glowColor;
     int[][] numGlows;
@@ -236,7 +239,7 @@ public class Game extends Canvas {
         upgradeFrame.setSize(30, 100);
         upgradeFrame.setLocation(800, 300);
         upgradeFrame.setVisible(true);
-        
+        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
     }
     
     /**
@@ -379,6 +382,10 @@ public class Game extends Canvas {
         
         public Entity getShip() {
         	return ship;
+        }
+        
+        public BufferStrategy getStrategy(){
+        	return strategy;
         }
         
         public void isDamaged() {
@@ -604,7 +611,8 @@ public class Game extends Canvas {
             
 
             //Draw pause button
-            if(paused){
+            buttons.get(0).draw(g);
+            /*if(paused){
                 g.setColor(Color.BLACK);
                 g.drawRect(361, 349, 75, 15);
             }else{
@@ -636,7 +644,7 @@ public class Game extends Canvas {
                     g.drawString("Pause (P)", 730, 52);
                 }
             	
-            }
+            }*/
             // finally, we've completed drawing so clear up the graphics
             // and flip the buffer over
             g.dispose();
@@ -720,44 +728,37 @@ public class Game extends Canvas {
 				mouseX=e.getX();
 				mouseY=e.getY();
 			}
-            if(paused){
-        		if(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364){
-        			mouseOverPause=true;
-        		}
-        		if(mouseOverPause){
-            		if(!(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364)){
-            			mouseOverPause=false;
-            		}
-        		}
-            }else{
-        		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
-        			mouseOverPause=true;
-        		}
-        		if(mouseOverPause){
-            		if(!(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55)){
-            			mouseOverPause=false;
-            		}
-        		}
-            }
+        	if(buttons.get(0).isInside(e.getX(), e.getY())&&!mouseOverPause){
+        		mouseOverPause=true;
+        		buttons.get(0).changeColors(Color.DARK_GRAY, Color.BLUE, Color.LIGHT_GRAY);
+        	}
+	        if(!buttons.get(0).isInside(e.getX(), e.getY())&&mouseOverPause){
+	            mouseOverPause=false;
+	        	buttons.get(0).changeColors(Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+	        }
 		}
     	
     }
     private class MouseClickHandler implements MouseListener{
     	public void mouseClicked(MouseEvent e) {
             if(paused){
-        		if(e.getX()>=361&&e.getX()<=436&&e.getY()>=349&&e.getY()<=364){
+        		if(buttons.get(0).isInside(e.getX(), e.getY())){
                     paused=false;
                     leftPressed = false;
                     rightPressed = false;
                     firePressed = false;
                     epicPressed=false;
-        			
+        			buttons.get(0).changePos(720, 40);
+        			buttons.get(0).changeSize(75, 15);
         		}
             	
             } else {
-        		if(e.getX()>=720&&e.getX()<=790&&e.getY()>=40&&e.getY()<=55){
+        		if(buttons.get(0).isInside(e.getX(), e.getY())){
                     if(!waitingForKeyPress) {
                             paused=true;
+                			buttons.get(0).changePos(360, 350);
+                			buttons.get(0).changeSize(70, 15);
+                            
                     }
         			
         		}
@@ -825,9 +826,13 @@ public class Game extends Canvas {
                 if(!paused) {
                     if(!waitingForKeyPress) {
                         paused=true;
+            			buttons.get(0).changePos(360, 350);
+            			buttons.get(0).changeSize(70, 15);
                     }
                 } else {
                     paused=false;
+        			buttons.get(0).changePos(720, 40);
+        			buttons.get(0).changeSize(75, 15);
                 }
                 leftPressed = false;
                 rightPressed = false;
