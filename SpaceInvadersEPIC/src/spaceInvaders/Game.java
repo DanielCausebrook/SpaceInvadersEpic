@@ -106,6 +106,8 @@ public class Game extends Canvas {
     
     private boolean mousePressed = false;
     
+    private boolean autoFire = false;
+    
     private LinkedList<Button> buttons = new LinkedList<>();
     
     Color[][] glowColor;
@@ -644,11 +646,11 @@ public class Game extends Canvas {
             
             // if we're pressing fire, attempt to fire
             
-            if (firePressed&&!paused) {
+            if ((firePressed||(autoFire&&!mouseControls))&&!paused) {
                 tryToFire(false);
             }
                         
-            if (epicPressed&&!paused) {
+            if ((epicPressed||(firePressed&&autoFire&&!mouseControls))&&!paused) {
                 tryToFire(true);
             }
             
@@ -814,6 +816,13 @@ public class Game extends Canvas {
             }
             if (e.getKeyCode() == KeyEvent.VK_B) {
                 epicPressed = true;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_F) {
+            	if(autoFire){
+            		autoFire = false;
+            	} else {
+            		autoFire = true;
+            	}
             }
             if (e.getKeyCode() == KeyEvent.VK_P) {
                 if(!paused) {
