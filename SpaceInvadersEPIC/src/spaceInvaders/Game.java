@@ -264,28 +264,42 @@ public class Game extends Canvas {
         }
         entities.add(ship);
         
-               
-        // create a block of aliens (5 rows, by 12 aliens, spaced evenly)
+        // create a boss alien at level 15
+        if(level==14){
         alienCount = 0;
         for (int row=0;row<gridRows;row++) {
             for (int x=0;x<gridCols;x++) {
                 Entity alien;
-                                double randDec = Math.random();
-                                if(randDec<=(level)*0.01) {
-                                    alien = new StrongAlien(this,"sprites/alienStrong.png",100+(x*50),(50)+row*30,row,x);
-                                } else if(randDec<=(level)*0.02) {
-                                    alien = new RegenAlien(this,"sprites/alienRegen.png",100+(x*50),(50)+row*30,row,x);
-                                } else if(randDec<=(level)*0.03) {
-                                    alien = new CloneAlien(this,"sprites/alienClone.png",100+(x*50),(50)+row*30,row,x);
-                                } else if(randDec<=(level)*0.04) {
-                                    alien = new FiringAlien(this,"sprites/FiringAlien.png",100+(x*50),(50)+row*30,row,x);
-                                } else {
-                                    alien = new RegularAlien(this,"sprites/alien.png",100+(x*50),(50)+row*30,row,x);
-                                }
+                alien = new bossAlien(this,"sprites/alienBoss.png",100+(x*50),(50)+row*30,row,x);
                 entities.add(alien);
-                                alienGrid[row][x]=alien;
+                alienGrid[row][x]=alien;
                 alienCount++;
+                }
             }
+        } else{
+	               
+	        // create a block of aliens (5 rows, by 12 aliens, spaced evenly)
+	        alienCount = 0;
+	        for (int row=0;row<gridRows;row++) {
+	            for (int x=0;x<gridCols;x++) {
+	                Entity alien;
+	                                double randDec = Math.random();
+	                                if(randDec<=(level)*0.01) {
+	                                    alien = new StrongAlien(this,"sprites/alienStrong.png",100+(x*50),(50)+row*30,row,x);
+	                                } else if(randDec<=(level)*0.02) {
+	                                    alien = new RegenAlien(this,"sprites/alienRegen.png",100+(x*50),(50)+row*30,row,x);
+	                                } else if(randDec<=(level)*0.03) {
+	                                    alien = new CloneAlien(this,"sprites/alienClone.png",100+(x*50),(50)+row*30,row,x);
+	                                } else if(randDec<=(level)*0.04) {
+	                                    alien = new FiringAlien(this,"sprites/FiringAlien.png",100+(x*50),(50)+row*30,row,x);
+	                                } else {
+	                                    alien = new RegularAlien(this,"sprites/alien.png",100+(x*50),(50)+row*30,row,x);
+	                                }
+	                entities.add(alien);
+	                                alienGrid[row][x]=alien;
+	                alienCount++;
+	            }
+	        }
         }
                 power = new PowerBar(this);
     }
