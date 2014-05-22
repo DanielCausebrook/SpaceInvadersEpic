@@ -96,8 +96,6 @@ public class Game extends Canvas {
     
     private boolean upgradesShown = false;
     
-    private boolean mouseOverPause = false;
-    
     private int damaged;
     
     private int mouseX;
@@ -153,7 +151,7 @@ public class Game extends Canvas {
                 if(!waitingForKeyPress) {
                     paused=true;
                     buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
-        			mouseOverPause=false;
+    	        	buttons.get(1).changeMouseOver(false);
                 }
                 upgradesShown=false;
             }
@@ -242,6 +240,8 @@ public class Game extends Canvas {
         upgradeFrame.setLocation(800, 300);
         upgradeFrame.setVisible(true);
         buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.get(1).changeActive(false);
     }
     
     /**
@@ -700,13 +700,21 @@ public class Game extends Canvas {
 				mouseX=e.getX();
 				mouseY=e.getY();
 			}
-        	if(buttons.get(0).isInside(e.getX(), e.getY())&&!mouseOverPause){
-        		mouseOverPause=true;
+        	if(buttons.get(0).isInside(e.getX(), e.getY())&&!buttons.get(0).hasMouseOver()){
+        		buttons.get(0).changeMouseOver(true);
         		buttons.get(0).changeColors(Color.DARK_GRAY, Color.BLUE, Color.LIGHT_GRAY);
         	}
-	        if(!buttons.get(0).isInside(e.getX(), e.getY())&&mouseOverPause){
-	            mouseOverPause=false;
+	        if(!buttons.get(0).isInside(e.getX(), e.getY())&&buttons.get(0).hasMouseOver()){
+	        	buttons.get(0).changeMouseOver(false);
 	        	buttons.get(0).changeColors(Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+	        }
+        	if(buttons.get(1).isInside(e.getX(), e.getY())&&!buttons.get(1).hasMouseOver()){
+        		buttons.get(1).changeMouseOver(true);
+        		buttons.get(1).changeColors(Color.DARK_GRAY, Color.BLUE, Color.LIGHT_GRAY);
+        	}
+	        if(!buttons.get(1).isInside(e.getX(), e.getY())&&buttons.get(1).hasMouseOver()){
+	        	buttons.get(1).changeMouseOver(false);
+	        	buttons.get(1).changeColors(Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
 	        }
 		}
     	
@@ -721,7 +729,8 @@ public class Game extends Canvas {
                     firePressed = false;
                     epicPressed=false;
                     buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
-        			mouseOverPause=false;
+    	        	buttons.get(1).changeMouseOver(false);
+        	        buttons.get(1).changeActive(false);
         		}
             	
             } else {
@@ -729,11 +738,24 @@ public class Game extends Canvas {
                     if(!waitingForKeyPress) {
                             paused=true;
                             buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
-                			mouseOverPause=false;
+            	        	buttons.get(1).changeMouseOver(false);
+                	        buttons.get(1).changeActive(true);
                     }
         			
         		}
             }
+        	if(buttons.get(1).isInside(e.getX(), e.getY())){
+        		if(!waitingForKeyPress) {
+                    if(mouseControls&&buttons.get(1).isActive()){
+                    	mouseControls=false;
+                    	buttons.get(1).changeText("Mouse Controls");
+                    } else {
+                    	mouseControls=true;
+                    	buttons.get(1).changeText("Key Controls");
+                    }
+                }
+        			
+        	}
     	}
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
@@ -798,12 +820,14 @@ public class Game extends Canvas {
                     if(!waitingForKeyPress) {
                         paused=true;
                         buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
-            			mouseOverPause=false;
+        	        	buttons.get(1).changeMouseOver(false);
+            	        buttons.get(1).changeActive(true);
                     }
                 } else {
                     paused=false;
                     buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
-        			mouseOverPause=false;
+    	        	buttons.get(1).changeMouseOver(false);
+        	        buttons.get(1).changeActive(false);
                 }
                 leftPressed = false;
                 rightPressed = false;

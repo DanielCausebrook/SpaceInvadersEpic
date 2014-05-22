@@ -15,6 +15,7 @@ public class Button {
 	private Game game;
 	private Color[] colors= new Color[3];
 	private boolean isActive = true;
+	private boolean mouseOver = false;
 	
 	public Button(Game g,int x,int y, int width, int height,String text){
 		game=g;
@@ -74,8 +75,20 @@ public class Button {
 		return colors;
 	}
 	
-	public void changeActive(boolean newC){
-		isActive=newC;
+	public void changeActive(boolean newS){
+		isActive=newS;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	
+	public void changeMouseOver(boolean newS){
+		mouseOver=newS;
+	}
+	
+	public boolean hasMouseOver(){
+		return mouseOver;
 	}
 	
 	public void draw(Graphics2D g,Color outlineColor,Color innerColor,Color textColor) {
