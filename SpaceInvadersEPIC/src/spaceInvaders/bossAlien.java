@@ -8,7 +8,7 @@ import java.util.Random;
  * 
 * @author Kevin Glass
  */
-public abstract class bossAlien extends AlienEntity {
+public class bossAlien extends AlienEntity {
     public bossAlien(Game game,String ref,int x,int y, int row, int col) {
         super(game,ref,x,y,row,col);
         armour=1000;
