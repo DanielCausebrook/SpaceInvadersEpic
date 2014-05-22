@@ -152,6 +152,8 @@ public class Game extends Canvas {
             public void windowDeactivated(WindowEvent e) {
                 if(!waitingForKeyPress) {
                     paused=true;
+                    buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+        			mouseOverPause=false;
                 }
                 upgradesShown=false;
             }
@@ -598,9 +600,9 @@ public class Game extends Canvas {
             // current message 
             g.setColor(Color.white);
             if(paused) {
-            	g.setColor(Color.DARK_GRAY);
+            	g.setColor(Color.WHITE);
             	g.fillRect(350, 275,100,100);
-                g.setColor(Color.white);
+                g.setColor(Color.BLACK);
                 g.drawString("Paused",(800-g.getFontMetrics().stringWidth("Paused"))/2,300);
             } else if (waitingForKeyPress) {
                 g.drawString(message,(800-g.getFontMetrics().stringWidth(message))/2,250);
@@ -610,41 +612,11 @@ public class Game extends Canvas {
             g.drawString("Level "+(level+1),10,30);
             
 
-            //Draw pause button
-            buttons.get(0).draw(g);
-            /*if(paused){
-                g.setColor(Color.BLACK);
-                g.drawRect(361, 349, 75, 15);
-            }else{
-                g.setColor(Color.DARK_GRAY);
-                g.drawRect(720, 40, 70, 15);
+            //Draw all buttons
+            for(int i = 0;i<buttons.size();i++){
+                buttons.get(i).draw(g);
             }
-            if(mouseOverPause){
-                if(paused){
-                    g.setColor(Color.BLUE);
-                    g.fillRect(362, 350, 74, 14);
-                    g.setColor(Color.WHITE);
-                    g.drawString("Unpause (P)", 364, 361);
-                }else{
-                    g.setColor(Color.BLUE);
-                    g.fillRect(721, 41, 69, 14);
-                    g.setColor(Color.WHITE);
-                    g.drawString("Pause (P)", 730, 52);
-                }
-            } else {
-                if(paused){
-                    g.setColor(Color.LIGHT_GRAY);
-                    g.fillRect(362, 350, 74, 14);
-                    g.setColor(Color.BLACK);
-                    g.drawString("Unpause (P)", 364, 361);
-                }else{
-                    g.setColor(Color.LIGHT_GRAY);
-                    g.fillRect(721, 41, 69, 14);
-                    g.setColor(Color.BLACK);
-                    g.drawString("Pause (P)", 730, 52);
-                }
-            	
-            }*/
+            
             // finally, we've completed drawing so clear up the graphics
             // and flip the buffer over
             g.dispose();
@@ -748,17 +720,16 @@ public class Game extends Canvas {
                     rightPressed = false;
                     firePressed = false;
                     epicPressed=false;
-        			buttons.get(0).changePos(720, 40);
-        			buttons.get(0).changeSize(75, 15);
+                    buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+        			mouseOverPause=false;
         		}
             	
             } else {
         		if(buttons.get(0).isInside(e.getX(), e.getY())){
                     if(!waitingForKeyPress) {
                             paused=true;
-                			buttons.get(0).changePos(360, 350);
-                			buttons.get(0).changeSize(70, 15);
-                            
+                            buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                			mouseOverPause=false;
                     }
         			
         		}
@@ -826,13 +797,13 @@ public class Game extends Canvas {
                 if(!paused) {
                     if(!waitingForKeyPress) {
                         paused=true;
-            			buttons.get(0).changePos(360, 350);
-            			buttons.get(0).changeSize(70, 15);
+                        buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+            			mouseOverPause=false;
                     }
                 } else {
                     paused=false;
-        			buttons.get(0).changePos(720, 40);
-        			buttons.get(0).changeSize(75, 15);
+                    buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+        			mouseOverPause=false;
                 }
                 leftPressed = false;
                 rightPressed = false;

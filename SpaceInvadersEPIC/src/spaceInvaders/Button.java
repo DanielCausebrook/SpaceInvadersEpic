@@ -14,6 +14,7 @@ public class Button {
 	private int strY;
 	private Game game;
 	private Color[] colors= new Color[3];
+	private boolean isActive = true;
 	
 	public Button(Game g,int x,int y, int width, int height,String text){
 		game=g;
@@ -53,6 +54,18 @@ public class Button {
 		colors[2]=textColor;
 	}
 	
+	public void changeText(String newText) {
+		text=newText;
+	}
+	
+	public void changeAll(int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor){
+		rect = new Rectangle(x,y,width,height);
+		this.text=text;
+		colors[0]=outlineColor;
+		colors[1]=innerColor;
+		colors[2]=textColor;
+	}
+	
 	public Rectangle getRect() {
 		return rect;
 	}
@@ -61,26 +74,34 @@ public class Button {
 		return colors;
 	}
 	
+	public void changeActive(boolean newC){
+		isActive=newC;
+	}
+	
 	public void draw(Graphics2D g,Color outlineColor,Color innerColor,Color textColor) {
-		strX=(int)(((double)(rect.width-g.getFontMetrics().stringWidth(this.text)))/2);
-		strY=(int)(((double)(rect.height-g.getFontMetrics().getHeight()))/2);
-		g.setColor(outlineColor);
-		g.drawRect(rect.x, rect.y, rect.width, rect.height);
-		g.setColor(innerColor);
-		g.fillRect(rect.x+1, rect.y+1, rect.width-1, rect.height-1);
-		g.setColor(textColor);
-		g.drawString(text, strX, strY);
+		if(isActive){
+			strX=(int)(rect.x+(((double)(rect.width-g.getFontMetrics().stringWidth(this.text)))/2))+2;
+			strY=(int)(rect.height+rect.y+(((double)(rect.height-g.getFontMetrics().getHeight()))/2))-2;
+			g.setColor(outlineColor);
+			g.drawRect(rect.x, rect.y, rect.width, rect.height);
+			g.setColor(innerColor);
+			g.fillRect(rect.x+1, rect.y+1, rect.width-1, rect.height-1);
+			g.setColor(textColor);
+			g.drawString(text, strX, strY);
+		}
 	}
 	
 	public void draw(Graphics2D g) {
-		strX=(int)(rect.x+(((double)(rect.width-g.getFontMetrics().stringWidth(this.text)))/2));
-		strY=(int)(rect.height+rect.y+(((double)(rect.height-g.getFontMetrics().getHeight()))/2))-2;
+		if(isActive){
+			strX=(int)(rect.x+(((double)(rect.width-g.getFontMetrics().stringWidth(this.text)))/2))+2;
+			strY=(int)(rect.height+rect.y+(((double)(rect.height-g.getFontMetrics().getHeight()))/2))-2;
 			g.setColor(colors[0]);
 			g.drawRect(rect.x, rect.y, rect.width, rect.height);
 			g.setColor(colors[1]);
 			g.fillRect(rect.x+1, rect.y+1, rect.width-1, rect.height-1);
 			g.setColor(colors[2]);
 			g.drawString(text, strX, strY);
+		}
 			
 	}
 	
