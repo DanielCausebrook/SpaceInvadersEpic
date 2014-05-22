@@ -266,12 +266,14 @@ public class Game extends Canvas {
         entities.add(ship);
         
         // create a boss alien at level 15
-        if(level==14){
+        if(level==15){
         alienCount = 0;
+        gridRows = 1;
+        gridCols = 1;
         for (int row=0;row<gridRows;row++) {
             for (int x=0;x<gridCols;x++) {
                 Entity alien;
-                alien = new bossAlien(this,"sprites/alienBoss.png",100+(x*50),(50)+row*30,row,x);
+                alien = new bossAlien(this,"sprites/bossAlien.png",100+(x*50),(50)+row*30,row,x);
                 entities.add(alien);
                 alienGrid[row][x]=alien;
                 alienCount++;
@@ -645,9 +647,9 @@ public class Game extends Canvas {
             ship.setHorizontalMovement(0);
             if(!paused) {
 	            if(mouseControls){
-	            	if(mouseX+10<ship.x+(ship.sprite.getWidth()/2)){
+	            	if(mouseX+10<ship.x){
 	                    ship.setHorizontalMovement(-moveSpeed);
-	            	} else if(mouseX-10>ship.x+(ship.sprite.getWidth()/2)){
+	            	} else if(mouseX-10>ship.x){
 	                    ship.setHorizontalMovement(moveSpeed);
 	            	}
 	            } else {
