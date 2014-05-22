@@ -19,6 +19,7 @@ public class bossAlien extends AlienEntity {
         armour=600;
         maxHealth = 600;
         XPBonus = 25;
+        nextShot = (int) Math.floor(Math.random()*1000);
     }
     
     @Override
