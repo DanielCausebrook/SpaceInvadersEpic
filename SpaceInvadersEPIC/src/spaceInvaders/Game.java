@@ -86,7 +86,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 0;
+    private int level = 15;
     
     private UpgradeShop upgradePanel;
     
