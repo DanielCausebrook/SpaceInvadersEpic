@@ -262,6 +262,22 @@ public class Game extends Canvas {
         }
         entities.add(ship);
         
+        // create a boss alien at level 15
+        if(level==15){
+        	gridRows = 1;
+        	gridCols = 1;
+        alienCount = 0;
+        for (int row=0;row<gridRows;row++) {
+            for (int x=0;x<gridCols;x++) {
+                Entity alien;
+                alien = new BossAlien(this,"sprites/BossAlien.png",100+(x*50),(50)+row*30,row,x);
+                }
+                entities.add(alien);
+                                alienGrid[row][x]=alien;
+                alienCount++;
+            }
+        }
+        }
                
         // create a block of aliens (5 rows, by 12 aliens, spaced evenly)
         alienCount = 0;
