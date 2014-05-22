@@ -669,7 +669,7 @@ public class Game extends Canvas {
                 tryToFire(true);
             }
             
-            if(mouseControls){
+            if(mouseControls&&!paused){
             	if(mousePressed){
             		tryToFire(true);
             	} else {
