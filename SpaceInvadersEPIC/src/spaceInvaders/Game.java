@@ -645,9 +645,9 @@ public class Game extends Canvas {
             ship.setHorizontalMovement(0);
             if(!paused) {
 	            if(mouseControls){
-	            	if(mouseX+10<ship.x){
+	            	if(mouseX+10<ship.x+(ship.sprite.getWidth()/2)){
 	                    ship.setHorizontalMovement(-moveSpeed);
-	            	} else if(mouseX-10>ship.x){
+	            	} else if(mouseX-10>ship.x+(ship.sprite.getWidth()/2)){
 	                    ship.setHorizontalMovement(moveSpeed);
 	            	}
 	            } else {
