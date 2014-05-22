@@ -86,7 +86,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 15;
+    private int level = 0;
     
     private UpgradeShop upgradePanel;
     
@@ -266,14 +266,14 @@ public class Game extends Canvas {
         entities.add(ship);
         
         // create a boss alien at level 15
-        if(level==15){
+        if(level==14){
         alienCount = 0;
         gridRows = 1;
         gridCols = 1;
         for (int row=0;row<gridRows;row++) {
             for (int x=0;x<gridCols;x++) {
                 Entity alien;
-                alien = new bossAlien(this,"sprites/bossAlien.png",100+(x*50),(50)+row*30,row,x);
+                alien = new bossAlien(this,"sprites/alienBoss.png",100+(x*50),(50)+row*30,row,x);
                 entities.add(alien);
                 alienGrid[row][x]=alien;
                 alienCount++;
