@@ -154,6 +154,7 @@ public class Game extends Canvas {
                     paused=true;
                     buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
     	        	buttons.get(1).changeMouseOver(false);
+        	        buttons.get(1).changeActive(true);
                 }
                 upgradesShown=false;
             }
