@@ -26,7 +26,7 @@ public class UpgradeShop extends JPanel{
     private int moveStep;
 
     public UpgradeShop(Game g,JFrame frame) {
-        game=g;
+    	game=g;
         upgradeFrame=frame;
         addMouseListener(new MouseListener() {
             @Override
@@ -77,6 +77,17 @@ public class UpgradeShop extends JPanel{
         });;
         
         
+    }
+    
+    public void upgrade(int upgrade){
+    	switch(upgrade){
+    	case 0:
+    		break;
+    	case 1:
+    		break;
+    	default:
+    		break;
+    	}
     }
     
     public void paint(Graphics g) {
