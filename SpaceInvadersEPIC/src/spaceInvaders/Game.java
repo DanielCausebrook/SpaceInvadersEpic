@@ -86,7 +86,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 0;
+    private int level = 14;
     
     private UpgradeShop upgradePanel;
     
@@ -544,21 +544,31 @@ public class Game extends Canvas {
                 Entity entity = (Entity) entities.get(i);
                 
                 entity.draw(g);
+                if(level==14){
+                	if(entity instanceof AlienEntity){
+                        g.setColor(Color.DARK_GRAY);
+                        g.drawRect(11,580,780, 2);
+                        g.setColor(Color.RED);
+                        g.fillRect(11,580,(int) (780*((double)((AlienEntity) entity).armour/((AlienEntity) entity).maxHealth)), 2);
+                       }else if(entity instanceof ShipEntity){
+                           g.setColor(Color.DARK_GRAY);
+                           g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
+                           g.setColor(Color.RED);
+                           g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((ShipEntity) entity).armour/((ShipEntity) entity).maxHealth)), 2);
+                          }
+                }else{
                                 if(entity instanceof AlienEntity){
                                 g.setColor(Color.DARK_GRAY);
                                 g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
                                 g.setColor(Color.RED);
                                 g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((AlienEntity) entity).armour/((AlienEntity) entity).maxHealth)), 2);
-
-            
                                } else if(entity instanceof ShipEntity){
                                    g.setColor(Color.DARK_GRAY);
                                    g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
                                    g.setColor(Color.RED);
                                    g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((ShipEntity) entity).armour/((ShipEntity) entity).maxHealth)), 2);
-
-               
                                   }
+                }
                         }
                         
                         power.draw(g);
