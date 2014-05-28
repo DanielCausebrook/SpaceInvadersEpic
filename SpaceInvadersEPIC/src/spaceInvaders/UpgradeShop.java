@@ -6,8 +6,11 @@ package spaceInvaders;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.LinkedList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,7 +19,7 @@ import javax.swing.JPanel;
  * @author Daniel
  */
 public class UpgradeShop extends JPanel{
-    private int upgradePoints = 0;
+    private int upgradePoints = 10;
     private int shotPower = 0;
     private int bonusPower = 0;
     private Game game;
@@ -25,27 +28,21 @@ public class UpgradeShop extends JPanel{
     private boolean change=false;
     private int moveStep;
     private boolean reset=false;
+    private LinkedList<UpgradeItem> items = new LinkedList<>();
 
     public UpgradeShop(Game g,JFrame frame) {
     	game=g;
         upgradeFrame=frame;
+        initUpgrades();
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(mode==1) {
-                    if(e.getX()>130&&e.getX()<230&&e.getY()>35&&e.getY()<55) {
-                        if(upgradePoints>=5&&shotPower<30){
-                            upgradePoints-=5;
-                            shotPower++;
-                            repaint();
-                        }
-                    }
-                    if(e.getX()>130&&e.getX()<230&&e.getY()>75&&e.getY()<95) {
-                        if(upgradePoints>=10&&bonusPower<10){
-                            upgradePoints-=10;
-                            bonusPower++;
-                            repaint();
-                        }
+                    for(int i=0;i<items.size();i++){
+                    	if(items.get(i).isInside(e.getX(), e.getY())){
+                    		upgradePoints=items.get(i).buy(upgradePoints);
+                    		repaint();
+                    	}
                     }
                 }
                 
@@ -80,15 +77,9 @@ public class UpgradeShop extends JPanel{
         
     }
     
-    public void upgrade(int upgrade){
-    	switch(upgrade){
-    	case 0:
-    		break;
-    	case 1:
-    		break;
-    	default:
-    		break;
-    	}
+    private void initUpgrades() {
+        items.add(new UpgradeItem(game,2,30,"Shot power",5,30));
+        items.add(new UpgradeItem(game,2,70,"Bonus power",10,10));
     }
     
     public void paint(Graphics g) {
@@ -97,38 +88,8 @@ public class UpgradeShop extends JPanel{
         if(mode==1) {
             g.setColor(Color.WHITE);
             g.drawString("You have " + upgradePoints + " upgrade points!",10,20);
-            g.setColor(Color.ORANGE);
-            g.drawString("Shot power:",10,50);
-            g.drawString("Super shot power:",10,90);
-            g.setColor(Color.DARK_GRAY);
-            for(int i=0;i<30;i++){
-                g.drawRect((i*6)+2, 60, 5, 10);
-                if(shotPower-1>=i){
-                    g.setColor(Color.BLUE);
-                    g.fillRect((i*6)+3, 61, 4, 9);
-                    g.setColor(Color.DARK_GRAY);
-                }
-            }
-            for(int i=0;i<10;i++){
-                g.drawRect((i*16)+2, 100, 15, 10);
-                if(bonusPower-1>=i){
-                    g.setColor(Color.BLUE);
-                    g.fillRect((i*16)+3, 101, 14, 9);
-                    g.setColor(Color.DARK_GRAY);
-                }
-            }
-            if(shotPower<30) {
-                g.fillRect(130, 35, 100, 20);
-            }
-            if(bonusPower<10) {
-                g.fillRect(130, 75, 100, 20);
-            }
-            g.setColor(Color.RED);
-            if(shotPower<30) {
-                g.drawString("Upgrade   5 pts", 140, 50);
-            }
-            if(bonusPower<10) {
-                g.drawString("Upgrade  10 pts", 140, 90);
+            for(int i=0;i<items.size();i++){
+            	items.get(i).draw((Graphics2D) g);
             }
         } else if (mode==0) {
             g.setColor(Color.WHITE);
@@ -147,12 +108,8 @@ public class UpgradeShop extends JPanel{
         return upgradePoints;
     }
     
-    public int getShotPower() {
-        return shotPower;
-    }
-    
-    public int getBonusPower() {
-        return bonusPower;
+    public int getLevel(int item) {
+        return items.get(item).getLevel();
     }
     public void levelUp() {
         upgradePoints+=10;
