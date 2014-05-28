@@ -230,6 +230,9 @@ public class Game extends Canvas {
         firePressed = false;
         new Thread(glow).start();
     }
+    public int getLevel() {
+    	return level;
+    }
     
     private void initUpgrades() {
         upgradeFrame = new JFrame("Upgrades");
