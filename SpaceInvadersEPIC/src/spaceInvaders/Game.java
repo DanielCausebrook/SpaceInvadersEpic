@@ -190,7 +190,7 @@ public class Game extends Canvas {
             }
         });
         
-        
+        initButtons();
         
         // add a key input system (defined below) to our canvas
         // so we can respond to key pressed
@@ -230,6 +230,15 @@ public class Game extends Canvas {
         firePressed = false;
         new Thread(glow).start();
     }
+    public int getLevel() {
+    	return level;
+    }
+    
+    private void initButtons(){
+        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.get(1).changeActive(false);
+    }
     
     private void initUpgrades() {
         upgradeFrame = new JFrame("Upgrades");
@@ -242,9 +251,6 @@ public class Game extends Canvas {
         upgradeFrame.setSize(30, 100);
         upgradeFrame.setLocation(800, 300);
         upgradeFrame.setVisible(true);
-        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
-        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
-        buttons.get(1).changeActive(false);
     }
     
     /**
@@ -717,6 +723,7 @@ public class Game extends Canvas {
 				mouseX=e.getX();
 				mouseY=e.getY();
 			}
+			try{
         	if(buttons.get(0).isInside(e.getX(), e.getY())&&!buttons.get(0).hasMouseOver()){
         		buttons.get(0).changeMouseOver(true);
         		buttons.get(0).changeColors(Color.DARK_GRAY, Color.BLUE, Color.LIGHT_GRAY);
@@ -733,6 +740,9 @@ public class Game extends Canvas {
 	        	buttons.get(1).changeMouseOver(false);
 	        	buttons.get(1).changeColors(Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
 	        }
+			} catch(NullPointerException ex){
+				
+			}
 		}
     	
     }
