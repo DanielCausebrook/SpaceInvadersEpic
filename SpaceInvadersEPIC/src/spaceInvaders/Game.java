@@ -69,7 +69,6 @@ public class Game extends Canvas {
 	/** True if game logic needs to be applied this loop, normally as a result of a game event */
 	private boolean logicRequiredThisLoop = false;
 
-
 	private boolean epicPressed = false;
 
 	private final int gridRows = 5;
