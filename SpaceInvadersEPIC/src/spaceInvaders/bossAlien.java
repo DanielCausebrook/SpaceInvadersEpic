@@ -15,8 +15,8 @@ public class bossAlien extends AlienEntity {
         armour=300;
         maxHealth = 300;
         XPBonus = 25;
-        nextShot = (int) Math.floor(Math.random()*1000);
         isFiring=true;
+        fireSpeed=1000;
         init();
     }
 }
