@@ -86,7 +86,7 @@ public class Game extends Canvas {
         
     private int sparkCount=0;
     
-    private int level = 0;
+    private int level = 14;
     
     private UpgradeShop upgradePanel;
     
@@ -235,6 +235,21 @@ public class Game extends Canvas {
     }
     
     private void initUpgrades() {
+    	if(level>=14){
+    		upgradeFrame = new JFrame("Upgrades");
+            upgradePanel = new UpgradeShop(this,upgradeFrame);
+            upgradePanel.setBounds(0,0,240,400);
+            upgradeFrame.setLayout(null);
+            upgradeFrame.add(upgradePanel);
+            upgradeFrame.setUndecorated(true);
+            upgradeFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            upgradeFrame.setSize(30, 100);
+            upgradeFrame.setLocation(800, 300);
+            upgradeFrame.setVisible(true);
+            buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+            buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+            buttons.get(1).changeActive(false);
+    	}else{
         upgradeFrame = new JFrame("Upgrades");
         upgradePanel = new UpgradeShop(this,upgradeFrame);
         upgradePanel.setBounds(0,0,240,400);
@@ -248,6 +263,7 @@ public class Game extends Canvas {
         buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
         buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
         buttons.get(1).changeActive(false);
+    }
     }
     
     /**
@@ -466,11 +482,34 @@ public class Game extends Canvas {
         }
         
         // if we waited long enough, create the shot entity, and record the time.
-        lastFire = System.currentTimeMillis();
-        ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getShotPower(),0);
-        entities.add(shot);
-                shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower(),0);
-        entities.add(shot);
+        		if(level>=14){
+        			lastFire = System.currentTimeMillis();
+        	        ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getShotPower(),0);
+        	        entities.add(shot);
+        	                shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower(),0);
+        	        entities.add(shot);
+        			if(isEpic&&power.getPower()>=10){
+                    	for(int i = 0;i<=upgradePanel.getxBonusPower();i++){
+                    		int shotPos;
+    	                	if(i%2==0){
+    	                         shotPos = (9+((int) Math.ceil(((double)i)/2)));
+    	                	} else {
+    	                        shotPos = (9-((int) Math.ceil(((double)i)/2)));
+    	                	}
+    	                	shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+shotPos,ship.getY()-5,1,0);
+    	                    entities.add(shot);
+    	                }
+                        shot = new ShotEntity(this,"sprites/shot2.gif",ship.getX()+9,ship.getY()-5,1,0);
+                        entities.add(shot);
+                        power.addPower(-10);
+                        
+                    }
+        		}else{
+        			lastFire = System.currentTimeMillis();
+        	        ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getShotPower(),0);
+        	        entities.add(shot);
+        	                shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getShotPower(),0);
+        	        entities.add(shot);
                 if(isEpic&&power.getPower()>=10){
                 	for(int i = 0;i<=upgradePanel.getBonusPower();i++){
                 		int shotPos;
@@ -487,7 +526,7 @@ public class Game extends Canvas {
                     power.addPower(-10);
                     
                 }
-    }
+    }}
     
     /**
      * The main game loop. This loop is running during all game
