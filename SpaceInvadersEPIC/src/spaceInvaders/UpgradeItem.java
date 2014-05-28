@@ -47,17 +47,24 @@ public class UpgradeItem {
 		return upgradeLevel;
 	}
 	
+	public void setNumUpgradeLevels(int newNum){
+		numUpgradeLevels = newNum;
+	}
+	public int getNumUpgradeLevels(){
+		return numUpgradeLevels;
+	}
+	
 	public void draw(Graphics2D g){
 		g.setColor(Color.ORANGE);
 		g.drawString(text+":", x, y+g.getFontMetrics().getHeight());
 		g.setColor(Color.DARK_GRAY);
 		for(int i=0;i<numUpgradeLevels;i++){
-			int xCoord =x+((int)(i*((((double)150)/numUpgradeLevels)+1)));
+			int xCoord =(int)(x+(i*((((double)150)/numUpgradeLevels)+1)));
 			int yCoord =y+g.getFontMetrics().getHeight()+10;
-			g.drawRect(xCoord, yCoord,(int)(((double)150)/numUpgradeLevels), 10);
+			g.drawRect(xCoord, yCoord,(int)(((double)150)/numUpgradeLevels)+1, 10);
 			if(i<upgradeLevel){
 				g.setColor(Color.BLUE);
-				g.fillRect(xCoord+1, yCoord+1, (int)(((double)150)/numUpgradeLevels)-1, 9);
+				g.fillRect(xCoord, yCoord, (int)(((double)150)/numUpgradeLevels)+2,10);
 				g.setColor(Color.DARK_GRAY);
 			}
 		}

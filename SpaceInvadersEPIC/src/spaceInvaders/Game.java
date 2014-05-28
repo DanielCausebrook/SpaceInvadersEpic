@@ -274,6 +274,8 @@ public class Game extends Canvas {
         // create a boss alien at level 15
         if(level==14){
         alienCount = 0;
+        upgradePanel.getUpgradeItem(0).setNumUpgradeLevels(60);
+        upgradePanel.getUpgradeItem(1).setNumUpgradeLevels(20);
         for (int row=0;row<gridRows;row++) {
             for (int x=0;x<gridCols;x++) {
                 Entity alien;

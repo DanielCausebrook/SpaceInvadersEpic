@@ -115,6 +115,11 @@ public class UpgradeShop extends JPanel{
         upgradePoints+=10;
         repaint();
     }
+    
+    public UpgradeItem getUpgradeItem(int itemNum) {
+    	return items.get(itemNum);
+    }
+    
     public void updateWindow() {
         if(change){
             if(mode==0) {
