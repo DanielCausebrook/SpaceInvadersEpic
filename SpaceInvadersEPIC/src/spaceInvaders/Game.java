@@ -86,7 +86,7 @@ public class Game extends Canvas {
 
 	private int sparkCount=0;
 
-	private int level = 0;
+	private int level = 14;
 
 	private UpgradeShop upgradePanel;
 
@@ -230,9 +230,6 @@ public class Game extends Canvas {
 		firePressed = false;
 		new Thread(glow).start();
 	}
-	public int getLevel() {
-		return level;
-	}
 
 	private void initButtons(){
 		buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
@@ -351,6 +348,10 @@ public class Game extends Canvas {
 		}
 		level++;
 		waitingForKeyPress = true;
+	}
+	
+	public int getLevel() {
+		return level;
 	}
 
 	public ArrayList getEntities(){
