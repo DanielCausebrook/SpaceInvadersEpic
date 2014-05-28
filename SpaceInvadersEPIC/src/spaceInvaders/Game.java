@@ -230,6 +230,9 @@ public class Game extends Canvas {
         firePressed = false;
         new Thread(glow).start();
     }
+    public int getLevel() {
+    	return level;
+    }
     
     private void initUpgrades() {
         upgradeFrame = new JFrame("Upgrades");
@@ -268,11 +271,15 @@ public class Game extends Canvas {
         // create a boss alien at level 15
         if(level==14){
         alienCount = 0;
+        for (int row=0;row<gridRows;row++) {
+            for (int x=0;x<gridCols;x++) {
                 Entity alien;
-                alien = new bossAlien(this,"sprites/alienBoss.png",100+(50),(50)+1*30,1,1);
+                alien = new bossAlien(this,"sprites/alienBoss.png",100+(x*50),(50)+row*30,row,x);
                 entities.add(alien);
-                alienGrid[1][1]=alien;
+                alienGrid[row][x]=alien;
                 alienCount++;
+                }
+            }
         } else{
 	               
 	        // create a block of aliens (5 rows, by 12 aliens, spaced evenly)
@@ -544,31 +551,21 @@ public class Game extends Canvas {
                 Entity entity = (Entity) entities.get(i);
                 
                 entity.draw(g);
-                if(level==14){
-                	if(entity instanceof AlienEntity){
-                        g.setColor(Color.DARK_GRAY);
-                        g.drawRect(11,580,780, 2);
-                        g.setColor(Color.RED);
-                        g.fillRect(11,580,(int) (780*((double)((AlienEntity) entity).armour/((AlienEntity) entity).maxHealth)), 2);
-                       }else if(entity instanceof ShipEntity){
-                           g.setColor(Color.DARK_GRAY);
-                           g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
-                           g.setColor(Color.RED);
-                           g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((ShipEntity) entity).armour/((ShipEntity) entity).maxHealth)), 2);
-                          }
-                }else{
                                 if(entity instanceof AlienEntity){
                                 g.setColor(Color.DARK_GRAY);
                                 g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
                                 g.setColor(Color.RED);
                                 g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((AlienEntity) entity).armour/((AlienEntity) entity).maxHealth)), 2);
+
+            
                                } else if(entity instanceof ShipEntity){
                                    g.setColor(Color.DARK_GRAY);
                                    g.drawRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1, entity.sprite.getWidth(), 2);
                                    g.setColor(Color.RED);
                                    g.fillRect(entity.getX(), entity.getY()+entity.sprite.getHeight()+1,(int) (entity.sprite.getWidth()*((double)((ShipEntity) entity).armour/((ShipEntity) entity).maxHealth)), 2);
+
+               
                                   }
-                }
                         }
                         
                         power.draw(g);
@@ -651,9 +648,9 @@ public class Game extends Canvas {
             ship.setHorizontalMovement(0);
             if(!paused) {
 	            if(mouseControls){
-	            	if(mouseX+10<ship.x){
+	            	if(mouseX+10<ship.x+(ship.sprite.getWidth()/2)){
 	                    ship.setHorizontalMovement(-moveSpeed);
-	            	} else if(mouseX-10>ship.x){
+	            	} else if(mouseX-10>ship.x+(ship.sprite.getWidth()/2)){
 	                    ship.setHorizontalMovement(moveSpeed);
 	            	}
 	            } else {

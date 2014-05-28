@@ -29,6 +29,10 @@ public class UpgradeShop extends JPanel{
     public UpgradeShop(Game g,JFrame frame) {
         game=g;
         upgradeFrame=frame;
+        currentLevel = game.getLevel();
+        if(currentLevel>=14){
+        	
+        }else{
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -75,7 +79,7 @@ public class UpgradeShop extends JPanel{
                 }
             }
             
-        });;
+        });}
         
         
     }
