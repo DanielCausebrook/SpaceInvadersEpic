@@ -108,7 +108,7 @@ public abstract class AlienEntity extends Entity {
     }
     
     private void fire(){
-			ShotEntity shot = new ShotEntity(game,"sprites/AlienShot.png",(int)(x+sprite.getHeight()),(int)Math.round(y-(sprite.getWidth()/2)),10,1);
+			ShotEntity shot = new ShotEntity(game,"sprites/AlienShot.png",(int)Math.round(x+(sprite.getWidth()/2)),(int)(y+sprite.getHeight()),10,1);
 			game.entities.add(shot);
     }
     

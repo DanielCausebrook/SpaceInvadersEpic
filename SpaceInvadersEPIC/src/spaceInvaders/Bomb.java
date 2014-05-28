@@ -86,7 +86,7 @@ public class Bomb extends Entity {
         if (other instanceof AlienEntity && bombType==0) {
             // remove the affected entities
             try{
-            ((AlienEntity) other).alienKilled(bombDmg);
+            	((AlienEntity) other).alienKilled(bombDmg);
             } catch(Exception e) {
                 game.removeEntity(other);
             }

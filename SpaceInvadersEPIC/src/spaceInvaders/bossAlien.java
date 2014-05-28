@@ -12,9 +12,9 @@ public class bossAlien extends AlienEntity {
     
     public bossAlien(Game game,String ref,int x,int y, int row, int col) {
         super(game,ref,x,y,row,col);
-        armour=300;
-        maxHealth = 300;
-        XPBonus = 25;
+        armour=20000;
+        maxHealth =20000;
+        XPBonus = 500;
         isFiring=true;
         fireSpeed=1000;
         init();
