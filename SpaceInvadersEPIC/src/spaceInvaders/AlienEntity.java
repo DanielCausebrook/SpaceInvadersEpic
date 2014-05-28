@@ -54,7 +54,7 @@ public abstract class AlienEntity extends Entity {
         }
         // and vice vesa, if we have reached the right hand side of 
         // the screen and are moving right, request a logic update
-        if ((dx > 0) && (x > 750)) {
+        if ((dx > 0) && ((x+sprite.getWidth()) > 790)) {
             game.updateLogic();
         }
         
