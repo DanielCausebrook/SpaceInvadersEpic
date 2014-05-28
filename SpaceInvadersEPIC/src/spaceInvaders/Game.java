@@ -717,6 +717,7 @@ public class Game extends Canvas {
 				mouseX=e.getX();
 				mouseY=e.getY();
 			}
+			try{
         	if(buttons.get(0).isInside(e.getX(), e.getY())&&!buttons.get(0).hasMouseOver()){
         		buttons.get(0).changeMouseOver(true);
         		buttons.get(0).changeColors(Color.DARK_GRAY, Color.BLUE, Color.LIGHT_GRAY);
@@ -733,6 +734,9 @@ public class Game extends Canvas {
 	        	buttons.get(1).changeMouseOver(false);
 	        	buttons.get(1).changeColors(Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
 	        }
+			} catch(NullPointerException ex){
+				
+			}
 		}
     	
     }
