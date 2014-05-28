@@ -27,6 +27,7 @@ public class UpgradeShop extends JPanel{
     private boolean change=false;
     private int moveStep;
     private int currentLevel;
+    private boolean reset=false;
 
     public UpgradeShop(Game g,JFrame frame) {
         game=g;
