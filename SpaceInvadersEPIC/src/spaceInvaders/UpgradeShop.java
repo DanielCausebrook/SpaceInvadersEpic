@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * @author Daniel
  */
 public class UpgradeShop extends JPanel{
-    private int upgradePoints = 10;
+    private int upgradePoints = 0;
     private int shotPower = 0;
     private int xShotPower = 0;
     private int bonusPower = 0;
