@@ -230,6 +230,9 @@ public class Game extends Canvas {
         firePressed = false;
         new Thread(glow).start();
     }
+    public int getLevel() {
+    	return level;
+    }
     
     private void initButtons(){
         buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
