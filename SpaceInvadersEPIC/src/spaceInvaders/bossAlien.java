@@ -16,8 +16,8 @@ public class bossAlien extends AlienEntity {
     
     public bossAlien(Game game,String ref,int x,int y, int row, int col) {
         super(game,ref,x,y,row,col);
-        armour=10000;
-        maxHealth = 10000;
+        armour=20000;
+        maxHealth = 20000;
         XPBonus = 500;
         nextShot = (int) Math.floor(Math.random()*1000);
     }
