@@ -52,8 +52,12 @@ public class Game extends Canvas {
     private final double moveSpeed = 300;
     /** The time at which last fired a shot */
     private long lastFire = 0;
+    /** The time at which last fired a bomb */
+    private long lastBombFire = 0;
     /** The interval between our players shot (ms) */
     private final long firingInterval = 0;
+    /** The interval between our players bomb shot (ms) */
+    private final long bombFiringInterval = 5000;
     /** The number of aliens left on the screen */
     private int alienCount;
     
@@ -67,6 +71,8 @@ public class Game extends Canvas {
     private boolean rightPressed = false;
     /** True if we are firing */
     private boolean firePressed = false;
+    /** True if we are firing bomb */
+    private boolean bombPressed = false;
     /** True if game logic needs to be applied this loop, normally as a result of a game event */
     private boolean logicRequiredThisLoop = false;
         
@@ -228,6 +234,7 @@ public class Game extends Canvas {
         leftPressed = false;
         rightPressed = false;
         firePressed = false;
+        bombPressed=false;
         new Thread(glow).start();
     }
     public int getLevel() {
@@ -276,6 +283,7 @@ public class Game extends Canvas {
         alienCount = 0;
         upgradePanel.getUpgradeItem(0).setNumUpgradeLevels(60);
         upgradePanel.getUpgradeItem(1).setNumUpgradeLevels(20);
+        upgradePanel.getUpgradeItem(2).setNumUpgradeLevels(60);
         for (int row=0;row<gridRows;row++) {
             for (int x=0;x<gridCols;x++) {
                 Entity alien;
@@ -493,6 +501,15 @@ public class Game extends Canvas {
                     
                 }
     }
+    public void tryToFireBomb(boolean bombAway){
+    	// check that we have waiting long enough to fire
+        if (System.currentTimeMillis() - lastBombFire < bombFiringInterval) {
+            return;
+        }
+        lastBombFire = System.currentTimeMillis();
+    	Bomb bomb = new Bomb(this,"sprites/bomb.png",ship.getX()+9,ship.getY()-5,upgradePanel.getLevel(2)*50,0);
+        entities.add(bomb);
+    }
     
     /**
      * The main game loop. This loop is running during all game
@@ -671,10 +688,12 @@ public class Game extends Canvas {
             
             if ((firePressed||(autoFire&&!mouseControls))&&!paused) {
                 tryToFire(false);
-            }
-                        
+            }       
             if ((epicPressed||(firePressed&&autoFire&&!mouseControls))&&!paused) {
                 tryToFire(true);
+            }
+            if(bombPressed == true){
+            	tryToFireBomb(true);
             }
             
             if(mouseControls&&!paused){
@@ -756,6 +775,7 @@ public class Game extends Canvas {
                     leftPressed = false;
                     rightPressed = false;
                     firePressed = false;
+                    bombPressed = false;
                     epicPressed=false;
                     buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
     	        	buttons.get(1).changeMouseOver(false);
@@ -841,6 +861,9 @@ public class Game extends Canvas {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 firePressed = true;
             }
+            if (e.getKeyCode() == KeyEvent.VK_X) {
+            	bombPressed = true;
+            }
             if (e.getKeyCode() == KeyEvent.VK_B) {
                 epicPressed = true;
             }
@@ -868,6 +891,7 @@ public class Game extends Canvas {
                 leftPressed = false;
                 rightPressed = false;
                 firePressed = false;
+                bombPressed = false;
             }
         } 
         
@@ -892,6 +916,9 @@ public class Game extends Canvas {
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 firePressed = false;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_X) {
+            	bombPressed = false;
             }
             if (e.getKeyCode() == KeyEvent.VK_B) {
                 epicPressed = false;

@@ -19,15 +19,12 @@ import javax.swing.JPanel;
  * @author Daniel
  */
 public class UpgradeShop extends JPanel{
-    private int upgradePoints = 0;
-    private int shotPower = 0;
-    private int bonusPower = 0;
+    private int upgradePoints = 1000;
     private Game game;
     private JFrame upgradeFrame;
     private int mode=0;
     private boolean change=false;
     private int moveStep;
-    private boolean reset=false;
     private LinkedList<UpgradeItem> items = new LinkedList<>();
 
     public UpgradeShop(Game g,JFrame frame) {
@@ -80,6 +77,7 @@ public class UpgradeShop extends JPanel{
     private void initUpgrades() {
         items.add(new UpgradeItem(game,2,30,"Shot power",5,30));
         items.add(new UpgradeItem(game,2,70,"Bonus power",10,10));
+        items.add(new UpgradeItem(game, 2, 110, "Bomb Badassness", 20, 10));
     }
     
     public void paint(Graphics g) {
