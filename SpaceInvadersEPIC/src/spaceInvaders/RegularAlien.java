@@ -13,6 +13,7 @@ public class RegularAlien extends AlienEntity{
         super(game,ref,x,y,row,col);
         XPBonus=5;
         maxHealth = 100;
+        init();
     }
     
 }

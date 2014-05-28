@@ -190,7 +190,7 @@ public class Game extends Canvas {
             }
         });
         
-        
+        initButtons();
         
         // add a key input system (defined below) to our canvas
         // so we can respond to key pressed
@@ -234,6 +234,12 @@ public class Game extends Canvas {
     	return level;
     }
     
+    private void initButtons(){
+        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.get(1).changeActive(false);
+    }
+    
     private void initUpgrades() {
         upgradeFrame = new JFrame("Upgrades");
         upgradePanel = new UpgradeShop(this,upgradeFrame);
@@ -245,9 +251,6 @@ public class Game extends Canvas {
         upgradeFrame.setSize(30, 100);
         upgradeFrame.setLocation(800, 300);
         upgradeFrame.setVisible(true);
-        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
-        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
-        buttons.get(1).changeActive(false);
     }
     
     /**
