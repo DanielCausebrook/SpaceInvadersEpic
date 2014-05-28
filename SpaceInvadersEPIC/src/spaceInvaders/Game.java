@@ -415,7 +415,10 @@ public class Game extends Canvas {
 	public void isDamaged() {
 		damaged=100;
 	}
-
+	
+	public UpgradeShop getUpgrades() {
+		return upgradePanel;
+	}
 
 	/**
 	 * Notification that an alien has been killed
@@ -469,12 +472,12 @@ public class Game extends Canvas {
 
 		 // if we waited long enough, create the shot entity, and record the time.
 		 lastFire = System.currentTimeMillis();
-		 ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getLevel(0),0);
+		 ShotEntity shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+12,ship.getY()-5,upgradePanel.getLevel("ShtPwr"),0);
 		 entities.add(shot);
-		 shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getLevel(0),0);
+		 shot = new ShotEntity(this,"sprites/shot.gif",ship.getX()+6,ship.getY()-5,upgradePanel.getLevel("ShtPwr"),0);
 		 entities.add(shot);
 		 if(isEpic&&power.getPower()>=10){
-			 for(int i = 0;i<=upgradePanel.getLevel(1);i++){
+			 for(int i = 0;i<=upgradePanel.getLevel("BoPwr");i++){
 				 int shotPos;
 				 if(i%2==0){
 					 shotPos = (9+((int) Math.ceil(((double)i)/2)));
