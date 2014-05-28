@@ -14,6 +14,7 @@ public class StrongAlien extends AlienEntity{
             super(game,ref,x,y,row,col);
             armour=300;
             maxHealth = 300;
+            init();
     }
     
 }
