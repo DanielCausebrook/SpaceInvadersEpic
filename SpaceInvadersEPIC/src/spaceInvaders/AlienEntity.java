@@ -24,6 +24,17 @@ public abstract class AlienEntity extends Entity {
     protected int colNum;
     
     protected int XPBonus = 10;
+    
+    protected boolean isFiring = false;
+    protected boolean isShield = false;
+    protected boolean isRegen = false;
+    protected int nextShot;
+    protected int fireSpeed = 300;
+	private int maxTimeToShield = 500;
+    private int timeToShield = maxTimeToShield;
+    public final int healthGain = 1;
+    public final int healthTime = 5;
+    private int healthCount = 0;
     /**
      * Create a new alien entity
      * 
@@ -34,12 +45,16 @@ public abstract class AlienEntity extends Entity {
      */
     public AlienEntity(Game game,String ref,int x,int y, int row, int col) {
         super(ref,x,y);
-                rowNum = row;
-                colNum = col;
+        rowNum = row;
+        colNum = col;
         this.game = game;
+    }
+    
+    public void init(){
+        nextShot = (int) Math.floor(Math.random()*fireSpeed);
         dx = -moveSpeed;
     }
-
+    
     /**
      * Request that this alien moved based on time elapsed
      * 
@@ -52,16 +67,61 @@ public abstract class AlienEntity extends Entity {
         if ((dx < 0) && (x < 10)) {
             game.updateLogic();
         }
-        // and vice vesa, if we have reached the right hand side of 
+        // and vice versa, if we have reached the right hand side of 
         // the screen and are moving right, request a logic update
-        if ((dx > 0) && (x > 750)) {
+        if ((dx > 0) && ((x+sprite.getWidth()) > 790)) {
             game.updateLogic();
+        }
+        
+        if(isFiring){
+			if(nextShot<=0){
+	        	fire();
+				nextShot = (int) Math.floor(Math.random()*fireSpeed);
+			} else {
+				nextShot--;
+			}
+        }
+        if(isShield){
+	        try{
+	            if(game.getAlienGrid()[rowNum+1][colNum]==null){
+	            	timeToShield-=delta;
+	            	if(timeToShield<=0){
+	            		createShield(delta);
+	                    timeToShield=maxTimeToShield;
+	            	}
+	            }
+	        }catch(Exception e){
+	
+	        }
+        	
+        }
+        if(isRegen){
+            healthCount++;
+            if(healthCount >= healthTime && armour<maxHealth-healthGain){
+                armour += healthGain;
+                healthCount=0;
+            }
         }
         
         // proceed with normal move
         super.move(delta);
     }
     
+    private void fire(){
+			ShotEntity shot = new ShotEntity(game,"sprites/AlienShot.png",(int)Math.round(x+(sprite.getWidth()/2)),(int)(y+sprite.getHeight()),10,1);
+			game.entities.add(shot);
+    }
+    
+    private void createShield(long delta){
+            		AlienEntity alien;
+            		alien = new RegularAlien(game,"sprites/alienShield.png",(int) x,(int)y+30,rowNum+1,colNum);
+            		game.addEntity(alien);
+            		alien.setHorizontalMovement(dx);
+                    Entity[][] grid = game.getAlienGrid();
+                    grid[rowNum+1][colNum]=alien;
+                    game.setAlienGrid(grid);
+                    game.notifyAlienCreated();
+    }
     
     /**
      * Update the game logic related to aliens
@@ -98,8 +158,14 @@ public abstract class AlienEntity extends Entity {
             game.notifyAlienKilled((int)y,(int)x);
             Random r = new Random();
             Color c;
-            
-            for(int i = 0; i<70;i++){
+
+            int numSparks;
+            if(Spark.glowEnabled){
+            	numSparks=Spark.glowSparks;
+            } else {
+            	numSparks=Spark.normalSparks;
+            }
+            for(int i = 0; i<numSparks;i++){
             	switch(r.nextInt(3)){
             	case 0:c=Color.GREEN;
             	break;
@@ -109,7 +175,7 @@ public abstract class AlienEntity extends Entity {
             	int distance = r.nextInt(20);
             	int xPos = (int) (x+(Math.cos(angle)*distance));
             	int yPos = (int) (y+(Math.sin(angle)*distance));
-            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);
+            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,Spark.glowEnabled);
             }
             for(int i = 0; i<XPBonus;i++){
             	double angle = r.nextInt(360);

@@ -42,7 +42,7 @@ public class XPBar {
                 game.levelUp();
                 for(int i =0;i<500;i++){
                     Random r = new Random();
-                    game.addSpark((int) ((r.nextInt()%(maxXP*pixPerXP))+10), (int) ((r.nextInt()%4)+10), 30, (int)(r.nextInt()%game.getWidth()), (int) ((r.nextInt()%500)+30), 50, Color.BLUE,true);
+                    game.addSpark((int) ((r.nextInt()%(maxXP*pixPerXP))+10), (int) ((r.nextInt()%4)+10), 30, (int)(r.nextInt()%game.getWidth()), (int) ((r.nextInt()%500)+30), 50, Color.BLUE,Spark.glowEnabled);
                 }
                 maxXP+=15;
                 shipLevel++;

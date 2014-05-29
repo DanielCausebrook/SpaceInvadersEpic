@@ -13,6 +13,9 @@ import java.util.Random;
  * @author Daniel
  */
 public class Spark{
+	public static final boolean glowEnabled = false;
+	public static final int glowSparks = 70;
+	public static final int normalSparks = 300;
     double x;
     double y;
     double stepX;
