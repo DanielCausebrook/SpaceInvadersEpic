@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
@@ -245,7 +246,7 @@ public class Game extends Canvas {
         buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
         buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
         buttons.get(1).changeActive(false);
-    }
+      }
     
     private void initUpgrades() {
         upgradeFrame = new JFrame("Upgrades");
@@ -540,6 +541,15 @@ public class Game extends Canvas {
             // Get hold of a graphics context for the accelerated 
             // surface and blank it out
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+            if(waitingForKeyPress){
+            	g.setColor(Color.BLACK);
+            	g.fillRect(0, 0, 800, 600);
+            	SpriteStore.get().getSprite("sprites/splashScreen.png").draw(g, 800, 600);
+            	Font fnt0 = new Font("arial", Font.BOLD, 50);
+            	g.setFont(fnt0);
+            	g.setColor(Color.RED);
+            	g.drawString("SPACE INVADERS EPIC", Game.WIDTH, 200);
+            }else{
             g.setColor(Color.black);
             g.fillRect(0,0,800,600);
             SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);
@@ -596,7 +606,7 @@ public class Game extends Canvas {
                         
                         power.draw(g);
                         XP.draw(g);
-                        
+            
             
                        if(!waitingForKeyPress&&!epicPressed&&!paused) {
                             sparkCount++;
@@ -657,12 +667,11 @@ public class Game extends Canvas {
             
             g.drawString("Level "+(level+1),10,30);
             
-
             //Draw all buttons
             for(int i = 0;i<buttons.size();i++){
                 buttons.get(i).draw(g);
             }
-            
+            }
             // finally, we've completed drawing so clear up the graphics
             // and flip the buffer over
             g.dispose();
@@ -707,7 +716,6 @@ public class Game extends Canvas {
             		tryToFire(false);
             	}
             }
-            
             
                         
             // finally pause for a bit. Note: this should run us at about
