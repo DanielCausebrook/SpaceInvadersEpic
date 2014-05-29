@@ -96,7 +96,7 @@ public class Bomb extends Entity {
 	            }
 	            for(int i = 0; i<numSparks;i++){
 	            	switch(r.nextInt(3)){
-		            	case 0:c=Color.RED;
+		            	case 0:c=Color.CYAN;
 		            	break;
 		            	case 1:c=Color.ORANGE;
 		            	break;
@@ -105,7 +105,7 @@ public class Bomb extends Entity {
 		            	default:c=Color.RED;
 	            	}
 	            	double angle = r.nextInt(360);
-	            	int distance = r.nextInt(200);
+	            	int distance = r.nextInt(50);
 	            	int xPos = (int) (x+(Math.cos(angle)*distance));
 	            	int yPos = (int) (y+(Math.sin(angle)*distance));
 	            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);

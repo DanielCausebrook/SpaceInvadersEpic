@@ -57,7 +57,7 @@ public class Game extends Canvas {
     /** The interval between our players shot (ms) */
     private final long firingInterval = 0;
     /** The interval between our players bomb shot (ms) */
-    private final long bombFiringInterval = 5000;
+    private final long bombFiringInterval = 10000;
     /** The number of aliens left on the screen */
     private int alienCount;
     
@@ -511,7 +511,7 @@ public class Game extends Canvas {
             return;
         }
         lastBombFire = System.currentTimeMillis();
-    	Bomb bomb = new Bomb(this,"sprites/bomb.png",ship.getX()+(int)(((double)ship.sprite.getWidth())/2),ship.getY()-ship.sprite.getHeight(),upgradePanel.getLevel("BombPwr")*50,0);
+    	Bomb bomb = new Bomb(this,"sprites/bomb.png",ship.getX()+(int)(((double)ship.sprite.getWidth())/2),ship.getY()-ship.sprite.getHeight(),upgradePanel.getLevel("BombPwr")*500,0);
         entities.add(bomb);
     }
     
