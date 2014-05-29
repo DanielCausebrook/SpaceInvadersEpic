@@ -542,9 +542,16 @@ public class Game extends Canvas {
             // surface and blank it out
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             if(waitingForKeyPress){
-            	g.setColor(Color.BLACK);
-            	g.fillRect(0, 0, 800, 600);
-            	SpriteStore.get().getSprite("sprites/splashScreen.png").draw(g, 800, 600);
+            	g.setColor(Color.black);
+                g.fillRect(0,0,800,600);
+                SpriteStore.get().getSprite("sprites/splashScreen.png").draw(g, 0, 0);
+                Color c= new Color(0,0,0,100);
+                if(damaged>0){
+                    c = new Color(100,0,0,100);
+                    damaged-=delta;
+                }
+                g.setColor(c);
+                g.fillRect(0,0,800,600);
             	Font fnt0 = new Font("arial", Font.BOLD, 50);
             	g.setFont(fnt0);
             	g.setColor(Color.RED);
