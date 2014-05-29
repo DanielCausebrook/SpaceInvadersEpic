@@ -1,5 +1,6 @@
 package spaceInvaders;
 
+import java.awt.Color;
 import java.util.Random;
 
 /**
@@ -84,6 +85,31 @@ public class Bomb extends Entity {
         
         // if we've hit an alien, kill it!
         if (other instanceof AlienEntity && bombType==0) {
+	    		Random r = new Random();
+	            Color c;
+	            
+	            int numSparks;
+	            if(Spark.glowEnabled){
+	            	numSparks=Spark.glowSparks;
+	            } else {
+	            	numSparks=Spark.normalSparks;
+	            }
+	            for(int i = 0; i<numSparks;i++){
+	            	switch(r.nextInt(3)){
+		            	case 0:c=Color.RED;
+		            	break;
+		            	case 1:c=Color.ORANGE;
+		            	break;
+		            	case 2:c=Color.RED;
+		            	break;
+		            	default:c=Color.RED;
+	            	}
+	            	double angle = r.nextInt(360);
+	            	int distance = r.nextInt(200);
+	            	int xPos = (int) (x+(Math.cos(angle)*distance));
+	            	int yPos = (int) (y+(Math.sin(angle)*distance));
+	            	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,true);
+	            }
             // remove the affected entities
             try{
             ((AlienEntity) other).alienKilled(bombDmg);
