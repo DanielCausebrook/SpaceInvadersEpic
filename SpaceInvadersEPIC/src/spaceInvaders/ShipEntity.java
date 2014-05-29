@@ -19,6 +19,8 @@ public class ShipEntity extends Entity {
     
     private int invincibility;
     
+    private int upgradeStatus = 0;
+    
     /**
      * Create a new entity to represent the players ship
      *  
@@ -102,6 +104,14 @@ public class ShipEntity extends Entity {
     		sprite.draw(g,(int) x,(int) y);
     	}else if(invincibility<0){
     		sprite.draw(g,(int) x,(int) y);
+    	}
+    }
+    
+    public void checkUpgrades() {
+    	if(game.getUpgrades().getLevel("ShpHlth")<upgradeStatus){
+    		upgradeStatus++;
+    		armour+=50;
+    		maxHealth=500+(50*upgradeStatus);
     	}
     }
     

@@ -14,14 +14,16 @@ public class UpgradeItem {
 	private int numUpgradeLevels;
 	private int upgradeLevel=0;
 	private boolean mouseOver = false;
+	private String tag;
 
-	public UpgradeItem(Game g, int x, int y, String text,int cost,int numUpgLev) {
+	public UpgradeItem(Game g, int x, int y, String text,int cost,int numUpgLev,String tag) {
 		game=g;
 		this.x=x;
 		this.y=y;
 		this.text=text;
 		this.cost=cost;
 		numUpgradeLevels=numUpgLev;
+		this.tag=tag;
 	}
 	
 	public int buy(int currPoints){
@@ -52,6 +54,10 @@ public class UpgradeItem {
 	}
 	public int getNumUpgradeLevels(){
 		return numUpgradeLevels;
+	}
+	
+	public String getTag() {
+		return tag;
 	}
 	
 	public void draw(Graphics2D g){
