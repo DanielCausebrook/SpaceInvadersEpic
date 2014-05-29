@@ -112,7 +112,7 @@ public class Bomb extends Entity {
 	            }
             // remove the affected entities
             try{
-            ((AlienEntity) other).alienKilled(bombDmg);
+            	((AlienEntity) other).alienKilled(bombDmg);
             } catch(Exception e) {
                 game.removeEntity(other);
             }

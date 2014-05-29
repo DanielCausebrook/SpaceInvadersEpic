@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * @author Daniel
  */
 public class UpgradeShop extends JPanel{
-    private int upgradePoints = 1000;
+    private int upgradePoints = 0;
     private Game game;
     private JFrame upgradeFrame;
     private int mode=0;
@@ -68,16 +68,14 @@ public class UpgradeShop extends JPanel{
                     change=true;
                 }
             }
-            
         });;
-        
-        
     }
     
     private void initUpgrades() {
-        items.add(new UpgradeItem(game,2,30,"Shot power",5,30));
-        items.add(new UpgradeItem(game,2,70,"Bonus power",10,10));
-        items.add(new UpgradeItem(game, 2, 110, "Bomb Badassness", 20, 10));
+        items.add(new UpgradeItem(game,2,30,"Shot power",5,30,"ShtPwr"));
+        items.add(new UpgradeItem(game,2,70,"Bonus power",10,10,"BoPwr"));
+        items.add(new UpgradeItem(game, 2, 110, "Bomb Badassness", 20, 10,"BombPwr"));
+        items.add(new UpgradeItem(game,2,150,"Ship health",15,10,"ShpHlth"));
     }
     
     public void paint(Graphics g) {
@@ -109,6 +107,16 @@ public class UpgradeShop extends JPanel{
     public int getLevel(int item) {
         return items.get(item).getLevel();
     }
+    
+    public int getLevel(String tag) {
+    	for(int i = 0;i<items.size();i++){
+    		if(items.get(i).getTag().equals(tag)){
+    	        return items.get(i).getLevel();
+    		}
+    	}
+        return 0;
+    }
+    
     public void levelUp() {
         upgradePoints+=10;
         repaint();
@@ -142,5 +150,5 @@ public class UpgradeShop extends JPanel{
                 }
             }
         }
+    	}
     }
-}
