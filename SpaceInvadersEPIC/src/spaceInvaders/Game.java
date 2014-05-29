@@ -243,8 +243,8 @@ public class Game extends Canvas {
 	}
 
 	private void initButtons(){
-		buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK,0));
-		buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK,0));
+		buttons.add(new Button(720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK,0));
+		buttons.add(new Button(355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK,0));
 		buttons.get(1).changeActive(false); 
 	}
 

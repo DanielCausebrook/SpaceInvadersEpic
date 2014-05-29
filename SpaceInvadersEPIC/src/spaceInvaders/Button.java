@@ -12,22 +12,18 @@ public class Button {
 	private String text;
 	private int strX;
 	private int strY;
-	private Game game;
 	private Color[] colors= new Color[3];
 	private boolean isActive = true;
 	private boolean mouseOver = false;
 	private int buttonType; // 0:Game buttons | 1:Title Screen buttons
 	
-	public Button(Game g,int x,int y, int width, int height,String text, int type){
-		game=g;
+	public Button(int x,int y, int width, int height,String text, int type){
 		this.buttonType = type;
 		rect = new Rectangle(x,y,width,height);
 		this.text=text;
-	    Graphics2D g2D = (Graphics2D) game.getStrategy().getDrawGraphics();
 	}
 	
-	public Button(Game g,int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor,int type){
-		game=g;
+	public Button(int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor,int type){
 		this.buttonType = type;
 		rect = new Rectangle(x,y,width,height);
 		this.text=text;
@@ -35,6 +31,8 @@ public class Button {
 		colors[1]=innerColor;
 		colors[2]=textColor;
 	}
+	
+	
 	
 	public boolean isInside(int x, int y){
 		if(x>rect.x&&y>rect.y&&x<(rect.x+rect.width)&&y<(rect.y+rect.height)){
@@ -49,7 +47,6 @@ public class Button {
 	
 	public void changeSize(int newW, int newH){
 		rect.setSize(newW, newH);
-	    Graphics2D g2D = (Graphics2D) game.getStrategy().getDrawGraphics();
 	}
 	
 	public void changeColors(Color outlineColor,Color innerColor,Color textColor){
