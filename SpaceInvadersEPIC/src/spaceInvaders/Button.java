@@ -16,16 +16,19 @@ public class Button {
 	private Color[] colors= new Color[3];
 	private boolean isActive = true;
 	private boolean mouseOver = false;
+	private int buttonType; // 0:Game buttons | 1:Title Screen buttons
 	
-	public Button(Game g,int x,int y, int width, int height,String text){
+	public Button(Game g,int x,int y, int width, int height,String text, int type){
 		game=g;
+		this.buttonType = type;
 		rect = new Rectangle(x,y,width,height);
 		this.text=text;
 	    Graphics2D g2D = (Graphics2D) game.getStrategy().getDrawGraphics();
 	}
 	
-	public Button(Game g,int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor){
+	public Button(Game g,int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor,int type){
 		game=g;
+		this.buttonType = type;
 		rect = new Rectangle(x,y,width,height);
 		this.text=text;
 		colors[0]=outlineColor;
