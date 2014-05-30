@@ -511,7 +511,7 @@ public class Game extends Canvas {
             return;
         }
         lastBombFire = System.currentTimeMillis();
-    	Bomb bomb = new Bomb(this,"sprites/bomb.png",ship.getX()+(int)(((double)ship.sprite.getWidth())/2),ship.getY()-ship.sprite.getHeight(),upgradePanel.getLevel("BombPwr")*500,0);
+    	Bomb bomb = new Bomb(this,"sprites/bomb.png",ship.getX()+(int)(((double)ship.sprite.getWidth())/2),ship.getY()-(ship.sprite.getHeight()*2),upgradePanel.getLevel("BombPwr")*500,0);
         entities.add(bomb);
     }
     
