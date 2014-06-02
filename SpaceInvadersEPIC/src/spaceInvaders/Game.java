@@ -18,6 +18,8 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,7 +39,9 @@ import javax.swing.JPanel;
 * @author Kevin Glass
  */
 public class Game extends Canvas {
-	final Point gameDimensions = new Point(800,600);
+    Toolkit tk = Toolkit.getDefaultToolkit();
+    Dimension d = tk.getScreenSize();
+    final Point gameDimensions = new Point(800,600);
     /** The strategy that allows us to use accelerate page flipping */
     private final BufferStrategy strategy;
     /** True if the game is currently "running", i.e. the game loop is looping */
