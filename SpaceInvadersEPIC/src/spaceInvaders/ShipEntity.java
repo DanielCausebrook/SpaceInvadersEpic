@@ -1,7 +1,9 @@
 package spaceInvaders;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.util.Random;
 
 /**
@@ -20,6 +22,10 @@ public class ShipEntity extends Entity {
     private int invincibility;
     
     private int upgradeStatus = 0;
+    Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
     
     /**
      * Create a new entity to represent the players ship
@@ -36,7 +42,7 @@ public class ShipEntity extends Entity {
     }
     
     /**
-     * Request that the ship move itself based on an elapsed ammount of
+     * Request that the ship move itself based on an elapsed amount of
      * time
      * 
      * @param delta The time that has elapsed since last move (ms)
@@ -50,7 +56,7 @@ public class ShipEntity extends Entity {
         }
         // if we're moving right and have reached the right hand side
         // of the screen, don't move
-        if ((dx > 0) && (x+(sprite.getWidth()/2) > 780)) {
+        if ((dx > 0) && (x+(sprite.getWidth()/2) > sX-20)) {
            return;
 
         }

@@ -1,6 +1,8 @@
 package spaceInvaders;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Random;
 
 /**
@@ -35,6 +37,10 @@ public abstract class AlienEntity extends Entity {
     public final int healthGain = 1;
     public final int healthTime = 5;
     private int healthCount = 0;
+    Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
     /**
      * Create a new alien entity
      * 
@@ -69,7 +75,7 @@ public abstract class AlienEntity extends Entity {
         }
         // and vice versa, if we have reached the right hand side of 
         // the screen and are moving right, request a logic update
-        if ((dx > 0) && ((x+sprite.getWidth()) > 790)) {
+        if ((dx > 0) && ((x+sprite.getWidth()) > sX -10)) {
             game.updateLogic();
         }
         

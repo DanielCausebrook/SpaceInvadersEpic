@@ -1,5 +1,7 @@
 package spaceInvaders;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Random;
 
 /**
@@ -18,6 +20,10 @@ public class ShotEntity extends Entity {
     private int shotType;
     
     private double shotDmg;
+    Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
     
     /**
      * Create a new shot from the player
@@ -59,11 +65,8 @@ public class ShotEntity extends Entity {
     		super.move(-(delta/5));
     	}
         
-        // if we shot off the screen, remove ourselfs
-        if (y < -100) {
-            game.removeEntity(this);
-        }
-        if (y > 700) {
+        // if we shot off the screen, remove ourselves
+        if (y <= 0) {
             game.removeEntity(this);
         }
     }

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -37,7 +38,11 @@ import javax.swing.JPanel;
 * @author Kevin Glass
  */
 public class Game extends Canvas {
-	final Point gameDimensions = new Point(800,600);
+	Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
+	final Point gameDimensions = new Point(sX,sY);
     /** The strategy that allows us to use accelerate page flipping */
     private final BufferStrategy strategy;
     /** True if the game is currently "running", i.e. the game loop is looping */
@@ -49,7 +54,7 @@ public class Game extends Canvas {
     /** The entity representing the player */
     private Entity ship;
     /** The speed at which the player's ship should move (pixels/second) */
-    private final double moveSpeed = 300;
+    private final double moveSpeed = 500;
     /** The time at which last fired a shot */
     private long lastFire = 0;
     /** The time at which last fired a bomb */
@@ -114,6 +119,8 @@ public class Game extends Canvas {
     
     private boolean autoFire = false;
     
+    private double speed = 0.01;
+    
     private LinkedList<Button> buttons = new LinkedList<>();
     
     Color[][] glowColor;
@@ -132,11 +139,11 @@ public class Game extends Canvas {
         container.setUndecorated(true);
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = (JPanel) container.getContentPane();
-        panel.setPreferredSize(new Dimension(800,600));
+        panel.setPreferredSize(new Dimension(sX,sY));
         panel.setLayout(null);
         
         // setup our canvas size and put it into the content of the frame
-        setBounds(0,0,gameDimensions.x,gameDimensions.y);
+        setBounds(0,0,sX,sY);
         panel.add(this);
         
         // Tell AWT not to bother repainting our canvas since we're
@@ -256,7 +263,7 @@ public class Game extends Canvas {
         upgradeFrame.setUndecorated(true);
         upgradeFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         upgradeFrame.setSize(30, 100);
-        upgradeFrame.setLocation(800, 300);
+        upgradeFrame.setLocation(sX, sY);
         upgradeFrame.setVisible(true);
     }
     
@@ -272,7 +279,7 @@ public class Game extends Canvas {
     	} catch(NullPointerException e){
     		prevArm=0;
     	}
-        ship = new ShipEntity(this,"sprites/ship.png",370,550);
+        ship = new ShipEntity(this,"sprites/ship.png",sX/2,sY-50);
         if(prevArm>0){
         	((ShipEntity)ship).armour = prevArm;
         }
@@ -438,7 +445,7 @@ public class Game extends Canvas {
     public void notifyAlienKilled(int y,int x) {
         // reduce the alien count, if there are none left, the player has won!
         alienCount--;
-        
+        speed = (double)(sX+sY)/1000;
         if (alienCount == 0) {
             notifyWin();
             for(int i=0;i<585-y;i+=2){
@@ -453,9 +460,15 @@ public class Game extends Canvas {
             
             if (entity instanceof AlienEntity) {
                 // speed up by 2%
-                entity.setHorizontalMovement(entity.getHorizontalMovement() * 1.02);
+                entity.setHorizontalMovement(entity.getHorizontalMovement() * 1.0+speed);
             }
         }
+    }
+    public int getsX(){
+    	return sX;
+    }
+    public int getsY(){
+    	return sY;
     }
         
         public void notifyAlienCreated() {
@@ -541,7 +554,7 @@ public class Game extends Canvas {
             // surface and blank it out
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
-            g.fillRect(0,0,800,600);
+            g.fillRect(0,0,sX,sY);
             SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);
             Color c= new Color(0,0,0,100);
             if(damaged>0){
@@ -549,7 +562,7 @@ public class Game extends Canvas {
                 damaged-=delta;
             }
             g.setColor(c);
-            g.fillRect(0,0,800,600);
+            g.fillRect(0,0,sX,sY);
             
             
             // cycle round asking each entity to move itself
@@ -602,7 +615,7 @@ public class Game extends Canvas {
                             sparkCount++;
                             if(sparkCount>=1){
                                 Random rand = new Random();
-                                Spark spk = new Spark(this,power,null,true,power.getBarPos()[0]+(rand.nextInt()%40)-20,power.getBarPos()[1]-(rand.nextInt()%20),10,1,50,Color.orange,Spark.glowEnabled);
+                                Spark spk = new Spark(this,power,null,true,power.getBarPos()[0]+(rand.nextInt()%40)-20,sY-20,10,5,50,Color.orange,Spark.glowEnabled);
                                 sparks.add(spk);
                                 sparkCount=0;
                             }
@@ -649,10 +662,10 @@ public class Game extends Canvas {
             	g.setColor(Color.WHITE);
             	g.fillRect(350, 275,100,100);
                 g.setColor(Color.BLACK);
-                g.drawString("Paused",(800-g.getFontMetrics().stringWidth("Paused"))/2,300);
+                g.drawString("Paused",(sX-g.getFontMetrics().stringWidth("Paused"))/2,300);
             } else if (waitingForKeyPress) {
-                g.drawString(message,(800-g.getFontMetrics().stringWidth(message))/2,250);
-                g.drawString("Press any key",(800-g.getFontMetrics().stringWidth("Press any key"))/2,300);
+                g.drawString(message,(sX-g.getFontMetrics().stringWidth(message))/2,250);
+                g.drawString("Press any key",(sX-g.getFontMetrics().stringWidth("Press any key"))/2,300);
             }
             
             g.drawString("Level "+(level+1),10,30);

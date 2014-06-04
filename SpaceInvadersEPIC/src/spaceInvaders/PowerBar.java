@@ -4,7 +4,9 @@
  */
 package spaceInvaders;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 /**
  *
  * @author Daniel
@@ -15,6 +17,10 @@ public class PowerBar {
     private double pixPerPwr;
     private final Game game;
     private int nextXP=0;
+    Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
     
     public PowerBar(Game g) {
         game=g;
@@ -54,10 +60,10 @@ public class PowerBar {
     
     public void draw(Graphics g){
         g.setColor(Color.DARK_GRAY);
-        g.drawRect(10, 585, 780, 4);
+        g.drawRect(sX-10, sY-20, 780, 4);
         g.setColor(Color.BLACK);
-        g.fillRect(11, 586, 779, 3);
+        g.fillRect(11, sY-21, 779, 3);
         g.setColor(Color.orange);
-        g.fillRect(11, 586, (int) (pixPerPwr * power)  , 3);
+        g.fillRect(11, sY-21, (int) (pixPerPwr * power)  , 3);
     }
 }
