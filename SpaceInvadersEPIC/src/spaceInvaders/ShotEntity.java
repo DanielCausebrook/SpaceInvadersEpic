@@ -10,8 +10,12 @@ import java.util.Random;
 * @author Kevin Glass
  */
 public class ShotEntity extends Entity {
+    Toolkit t = Toolkit.getDefaultToolkit();
+	Dimension d = t.getScreenSize();
+	private int sX = (int)d.getWidth();
+	private int sY = (int)d.getHeight();
     /** The vertical speed at which the players shot moves */
-    private final double moveSpeed = -700;
+    private final double moveSpeed = ((int)((double)(-0.694)*sX));
     /** The game in which this entity exists */
     private final Game game;
     /** True if this shot has been "used", i.e. its hit something */
@@ -20,10 +24,6 @@ public class ShotEntity extends Entity {
     private int shotType;
     
     private double shotDmg;
-    Toolkit t = Toolkit.getDefaultToolkit();
-	Dimension d = t.getScreenSize();
-	private int sX = (int)d.getWidth();
-	private int sY = (int)d.getHeight();
     
     /**
      * Create a new shot from the player

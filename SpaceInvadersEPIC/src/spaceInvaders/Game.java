@@ -54,7 +54,7 @@ public class Game extends Canvas {
     /** The entity representing the player */
     private Entity ship;
     /** The speed at which the player's ship should move (pixels/second) */
-    private final double moveSpeed = 500;
+    private final double moveSpeed = ((int)((double)0.3472*sX));
     /** The time at which last fired a shot */
     private long lastFire = 0;
     /** The time at which last fired a bomb */
@@ -119,8 +119,6 @@ public class Game extends Canvas {
     
     private boolean autoFire = false;
     
-    private double speed = 0.01;
-    
     private LinkedList<Button> buttons = new LinkedList<>();
     
     Color[][] glowColor;
@@ -133,6 +131,7 @@ public class Game extends Canvas {
      * Construct our game and set it running.
      */
     public Game() {
+    	System.out.println(sX);
         // create a frame to contain our game
         JFrame container = new JFrame("Space Invaders 101");
         //Window frame?
@@ -165,7 +164,7 @@ public class Game extends Canvas {
             public void windowDeactivated(WindowEvent e) {
                 if(!waitingForKeyPress) {
                     paused=true;
-                    buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                    buttons.get(0).changeAll(sX-70, sY-25, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
     	        	buttons.get(1).changeMouseOver(false);
         	        buttons.get(1).changeActive(true);
                 }
@@ -249,8 +248,8 @@ public class Game extends Canvas {
     }
     
     private void initButtons(){
-        buttons.add(new Button(this,720,40,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
-        buttons.add(new Button(this,355,330,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.add(new Button(this,sX-70,15,70,15,"Pause (P)",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
+        buttons.add(new Button(this,(sX/2)-45,(sY/2)+15,90,15,"Mouse Controls",Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK));
         buttons.get(1).changeActive(false);
     }
     
@@ -263,7 +262,7 @@ public class Game extends Canvas {
         upgradeFrame.setUndecorated(true);
         upgradeFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         upgradeFrame.setSize(30, 100);
-        upgradeFrame.setLocation(sX, sY);
+        upgradeFrame.setLocationRelativeTo(null);
         upgradeFrame.setVisible(true);
     }
     
@@ -445,7 +444,6 @@ public class Game extends Canvas {
     public void notifyAlienKilled(int y,int x) {
         // reduce the alien count, if there are none left, the player has won!
         alienCount--;
-        speed = (double)(sX+sY)/1000;
         if (alienCount == 0) {
             notifyWin();
             for(int i=0;i<585-y;i+=2){
@@ -460,7 +458,7 @@ public class Game extends Canvas {
             
             if (entity instanceof AlienEntity) {
                 // speed up by 2%
-                entity.setHorizontalMovement(entity.getHorizontalMovement() * 1.0+speed);
+                entity.setHorizontalMovement(entity.getHorizontalMovement() * 1.0);
             }
         }
     }
@@ -555,7 +553,7 @@ public class Game extends Canvas {
             Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
             g.setColor(Color.black);
             g.fillRect(0,0,sX,sY);
-            SpriteStore.get().getSprite("sprites/Earth.png").draw(g, 10, 200);
+            SpriteStore.get().getSprite("sprites/Earth.png").draw(g, sX/6, 0);
             Color c= new Color(0,0,0,100);
             if(damaged>0){
                 c = new Color(100,0,0,100);
@@ -660,7 +658,7 @@ public class Game extends Canvas {
             g.setColor(Color.white);
             if(paused) {
             	g.setColor(Color.WHITE);
-            	g.fillRect(350, 275,100,100);
+            	g.fillRect((sX/2)-50, (sY/2)-50,100,100);
                 g.setColor(Color.BLACK);
                 g.drawString("Paused",(sX-g.getFontMetrics().stringWidth("Paused"))/2,300);
             } else if (waitingForKeyPress) {
@@ -794,7 +792,7 @@ public class Game extends Canvas {
                     firePressed = false;
                     bombPressed = false;
                     epicPressed=false;
-                    buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                    buttons.get(0).changeAll(sX-75, 15, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
     	        	buttons.get(1).changeMouseOver(false);
         	        buttons.get(1).changeActive(false);
         		}
@@ -803,7 +801,7 @@ public class Game extends Canvas {
         		if(buttons.get(0).isInside(e.getX(), e.getY())){
                     if(!waitingForKeyPress) {
                             paused=true;
-                            buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                            buttons.get(0).changeAll((sX/2)-35,((int)((double)(sY/2)-7.5)), 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
             	        	buttons.get(1).changeMouseOver(false);
                 	        buttons.get(1).changeActive(true);
                     }
@@ -895,13 +893,13 @@ public class Game extends Canvas {
                 if(!paused) {
                     if(!waitingForKeyPress) {
                         paused=true;
-                        buttons.get(0).changeAll(365, 350, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                        buttons.get(0).changeAll((sX/2)-35, (sY/2)-8, 70, 15, "Unpause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
         	        	buttons.get(1).changeMouseOver(false);
             	        buttons.get(1).changeActive(true);
                     }
                 } else {
                     paused=false;
-                    buttons.get(0).changeAll(720, 40, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
+                    buttons.get(0).changeAll(sX-75, 15, 75, 15, "Pause(P)", Color.DARK_GRAY,Color.LIGHT_GRAY,Color.BLACK);
     	        	buttons.get(1).changeMouseOver(false);
         	        buttons.get(1).changeActive(false);
                 }

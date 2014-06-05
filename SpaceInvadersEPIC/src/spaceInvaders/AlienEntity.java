@@ -12,8 +12,12 @@ import java.util.Random;
  */
 public abstract class AlienEntity extends Entity {
         public int maxHealth = 100;
+        Toolkit t = Toolkit.getDefaultToolkit();
+    	Dimension d = t.getScreenSize();
+    	private int sX = (int)d.getWidth();
+    	private int sY = (int)d.getHeight();
     /** The speed at which the alien moves horizontally */
-    protected final double moveSpeed = 75;
+    protected final double moveSpeed = ((double)0.052083)*sX;
     /** The game in which the entity exists */
     protected final Game game;
     
@@ -37,10 +41,6 @@ public abstract class AlienEntity extends Entity {
     public final int healthGain = 1;
     public final int healthTime = 5;
     private int healthCount = 0;
-    Toolkit t = Toolkit.getDefaultToolkit();
-	Dimension d = t.getScreenSize();
-	private int sX = (int)d.getWidth();
-	private int sY = (int)d.getHeight();
     /**
      * Create a new alien entity
      * 
