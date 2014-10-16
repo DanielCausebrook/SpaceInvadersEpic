@@ -30,7 +30,7 @@ public class TitleScreen extends JPanel{
 		this.addMouseMotionListener(new MouseMoveHandler());
 		initButtons();
 		repaint();
-	}
+		}
 
 	public void initButtons() {
 		//Game g,int x,int y, int width, int height,String text,Color outlineColor,Color innerColor,Color textColor,int type
@@ -75,7 +75,7 @@ public class TitleScreen extends JPanel{
 		public void mouseClicked(MouseEvent e) {
 			if(buttons.get(0).isInside(e.getX(), e.getY())){
 				 Game g =new Game();
-
+				 TitleScreen.this.mainFrame.setVisible(false);
 				 g.errorCatch();
 			}
 		}

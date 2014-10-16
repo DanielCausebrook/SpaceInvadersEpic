@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Bomb extends Entity {
     /** The vertical speed at which the players bomb moves */
-    private final double moveSpeed = -50;
+    private final double moveSpeed = -75;
     /** The game in which this entity exists */
     private final Game game;
     /** True if this bomb has been "used", i.e. its hit something */

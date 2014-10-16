@@ -168,11 +168,18 @@ public abstract class AlienEntity extends Entity {
             for(int i = 0; i<numSparks;i++){
             	switch(r.nextInt(3)){
             	case 0:c=Color.GREEN;
+            	c=Color.red;
             	break;
-            	default:c=Color.GREEN;
+            	case 1:c=Color.ORANGE;
+            	c=Color.orange;
+            	break;
+            	case 2:c=Color.CYAN;
+            	c=Color.yellow;
+            	break;
+            	default:c=Color.BLUE;
             }
             	double angle = r.nextInt(360);
-            	int distance = r.nextInt(20);
+            	int distance = r.nextInt(100);
             	int xPos = (int) (x+(Math.cos(angle)*distance));
             	int yPos = (int) (y+(Math.sin(angle)*distance));
             	game.addSpark((int) (x+(sprite.getWidth()/2)),(int) (y+(sprite.getHeight()/2)), 10,xPos,yPos,20, c,Spark.glowEnabled);
